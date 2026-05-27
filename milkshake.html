@@ -205,6 +205,12 @@
         }
         .result-details strong {
             color: #3d2920;
+            font-size: 1.4rem;
+        }
+        #resultCost {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #8d5f4f;
         }
         .prize-badge {
             margin-top: 18px;
@@ -263,15 +269,15 @@
         <header class="page-header">
             <div class="logo">Milkshake Mixer</div>
             <div class="page-actions">
-                <a class="cart-link" href="cart.html">Cart <span class="cart-badge" id="cartCount">0</span></a>
-                <a class="back-link" href="index.html">Back to Dream Menu</a>
+                <a class="cart-link" href="cart.html">Warenkorb <span class="cart-badge" id="cartCount">0</span></a>
+                <a class="back-link" href="index.html">Zurück zum Dream-Menü</a>
             </div>
         </header>
 
         <section class="hero">
             <div>
-                <h1>Shake up your perfect drink</h1>
-                <p>Press the button below and let our milkshake generator combine flavors, milks and toppings into a creamy treat made just for you.</p>
+                <h1>Mixe deinen perfekten Drink</h1>
+                <p>Drücke auf den Button und unser Milkshake-Generator kombiniert Geschmacksrichtungen, Milchsorten und Toppings zu deinem perfekten cremigen Genuss.</p>
             </div>
 
             <div class="mixer-card">
@@ -281,51 +287,50 @@
                             <div class="shake-photo" id="shakePhoto">
                                 <img src="assets/image-1779900833516.png" alt="Milkshake preview">
                             </div>
-                            <div class="preview-label">Your milkshake preview</div>
+                            <div class="preview-label">Deine Milkshake-Vorschau</div>
                         </div>
                         <div class="result-text">
-                            <h2 id="resultTitle">Your milkshake result will appear here</h2>
-                            <p id="resultText">Click the button to create a dreamy milkshake combination.</p>
+                            <h2 id="resultTitle">Dein Milkshake erscheint hier</h2>
+                            <p id="resultText">Klicke auf den Button, um eine traumhafte Milkshake-Kombination zu erstellen.</p>
                             <div class="result-details">
-                                <div><strong>Cost:</strong> <span id="resultCost">-</span></div>
-                                <div><strong>Prize:</strong> <span id="resultPrize">None yet</span></div>
+                                <div><strong>Preis:</strong> <span id="resultCost">-</span></div>
+                                
                             </div>
                         </div>
                     </div>
                 </div>
-                <button class="mix-button" id="mixButton">Mix my milkshake</button>
+                <button class="mix-button" id="mixButton">Milkshake mixen</button>
                 <div class="action-row">
-                    <button class="secondary-button" id="addToCartButton" disabled>Add to cart</button>
-                    <a class="secondary-link" id="detailsLink" href="milkshake-details.html">View details</a>
+                    <button class="secondary-button" id="addToWarenkorbButton" disabled>In den Warenkorb</button>
+                    <a class="secondary-link" id="detailsLink" href="milkshake-details.html">Details ansehen</a>
                 </div>
-                <p class="note">Pro tip: refresh the page anytime to try a new wave of flavors.</p>
+                <p class="note">Tipp: Aktualisiere die Seite jederzeit für neue Geschmacksrichtungen.</p>
             </div>
         </section>
 
-        <footer>Enjoy the creamiest milkshake experience on the web.</footer>
+        <footer>Genieße das cremigste Milkshake-Erlebnis im Web.</footer>
     </div>
     <script src="cart-system.js"></script>
     <script>
         const flavors = [
-            'Strawberry Classic', 'Double Chocolate', 'Vanilla Bean Dream',
-            'Pistachio Swirl', 'Salted Caramel Crunch', 'Banana Split Bliss',
-            'Cookies & Cream', 'Berry Cheesecake', 'Mango Tango', 'Minty Chocolate Chip'
+            'Erdbeer Klassik', 'Doppelte Schokolade', 'Vanilletraum',
+            'Pistazien Swirl', 'Saltkaramell Crunch', 'Banana Split Genuss',
+            'Cookies & Cream', 'Beeren Cheesecake', 'Mango Tango', 'Minz-Schoko Chip'
         ];
-        const bases = ['whole milk', 'almond milk', 'oat milk', 'soy milk', 'coconut milk', 'hazelnut milk'];
+        const bases = ['Vollmilch', 'Mandelmilch', 'Hafermilch', 'Sojamilch', 'Kokosmilch', 'Haselnussmilch'];
         const toppings = [
-            'whipped cream and sprinkles', 'caramel drizzle', 'dark chocolate shavings',
-            'chopped nuts', 'fresh berries', 'cookie crumbs', 'marshmallows',
-            'cinnamon dust', 'chocolate syrup', 'toffee bits'
+            'Sahne und Streusel', 'Karamellsauce', 'Dunkle Schokoraspeln',
+            'Gehackte Nüsse', 'Frische Beeren', 'Keksstückchen', 'Marshmallows',
+            'Zimt', 'Schokosirup', 'Toffee-Stückchen'
         ];
 
         const mixButton        = document.getElementById('mixButton');
-        const addToCartButton  = document.getElementById('addToCartButton');
+        const addToWarenkorbButton  = document.getElementById('addToWarenkorbButton');
         const detailsLink      = document.getElementById('detailsLink');
         const cartCount        = document.getElementById('cartCount');
         const resultTitle      = document.getElementById('resultTitle');
         const resultText       = document.getElementById('resultText');
         const resultCost       = document.getElementById('resultCost');
-        const resultPrize      = document.getElementById('resultPrize');
         const shakePhoto       = document.getElementById('shakePhoto');
         const shakePreview     = document.getElementById('shakePreview');
 
@@ -333,22 +338,22 @@
             return arr[Math.floor(Math.random() * arr.length)];
         }
 
-        function updateCartBadge() {
-            window.CartSystem.updateBadge(cartCount);
+        function updateWarenkorbBadge() {
+            window.WarenkorbSystem.updateBadge(cartCount);
         }
 
-        function addToCart() {
-            const last = window.CartSystem.getLastMilkshake();
+        function addToWarenkorb() {
+            const last = window.WarenkorbSystem.getLastMilkshake();
             if (!last) return;
-            window.CartSystem.addMilkshake(last);
-            updateCartBadge();
-            addToCartButton.textContent = 'Added to cart ✓';
-            setTimeout(() => (addToCartButton.textContent = 'Add to cart'), 1400);
+            window.WarenkorbSystem.addMilkshake(last);
+            updateWarenkorbBadge();
+            addToWarenkorbButton.textContent = 'Hinzugefügt ✓';
+            setTimeout(() => (addToWarenkorbButton.textContent = 'In den Warenkorb'), 1400);
         }
 
         async function createMilkshake() {
             mixButton.disabled = true;
-            mixButton.textContent = 'Mixing…';
+            mixButton.textContent = 'Wird gemixt…';
             let data;
             try {
                 const res = await fetch('/api/milkshake');
@@ -357,36 +362,26 @@
                 data = createLocalMilkshake();
             }
             showMilkshake(data);
-            window.CartSystem.setLastMilkshake(data);
-            addToCartButton.disabled = false;
+            window.WarenkorbSystem.setLastMilkshake(data);
+            addToWarenkorbButton.disabled = false;
             mixButton.disabled = false;
-            mixButton.textContent = 'Mix my milkshake';
+            mixButton.textContent = 'Milkshake mixen';
         }
 
         function createLocalMilkshake() {
             const flavor  = randomItem(flavors);
             const base    = randomItem(bases);
             const topping = randomItem(toppings);
-            const prize   = selectPrize();
             const image   = selectImage();
             return {
                 title: flavor,
-                description: `A creamy milkshake made with ${base}, finished with ${topping}.`,
-                cost: (Math.random() * 3 + 4.5).toFixed(2),
-                prizeName: prize.name,
-                prizeDescription: prize.description,
-                imageUrl: image,
+                description: `Ein cremiger Milkshake mit ${base}, verfeinert mit ${topping}.`,
+                cost: (Math.random() * 3 + 4.5).toFixed(2),imageUrl: image,
                 actualLook: image,
             };
         }
 
-        function selectPrize() {
-            const r = Math.random();
-            if (r < 0.08)  return { name: 'Golden Sip',  description: 'Free extra topping and surprise bonus treat.' };
-            if (r < 0.25)  return { name: 'Cool Coupon', description: '20% off your next milkshake order.' };
-            if (r < 0.4)   return { name: 'VIP Straw',   description: 'Priority access to new seasonal flavors.' };
-            return { name: 'Tasty Treat', description: 'A sweet thank-you gift for your next visit.' };
-        }
+        
 
         function selectImage() {
             return randomItem([
@@ -401,20 +396,19 @@
             resultTitle.textContent  = data.title;
             resultText.textContent   = data.description;
             resultCost.textContent   = `€${Number(data.cost).toFixed(2)}`;
-            resultPrize.textContent  = `${data.prizeName} — ${data.prizeDescription}`;
             shakePhoto.innerHTML     = `<img src="${data.imageUrl || 'assets/image-1779900833516.png'}" alt="${data.title} preview">`;
             shakePreview.classList.remove('shaking');
             void shakePreview.offsetWidth;
             shakePreview.classList.add('shaking');
-            addToCartButton.disabled = false;
+            addToWarenkorbButton.disabled = false;
         }
 
         mixButton.addEventListener('click', createMilkshake);
-        addToCartButton.addEventListener('click', addToCart);
+        addToWarenkorbButton.addEventListener('click', addToWarenkorb);
 
         // Initialise: restore last milkshake + sync cart badge
-        updateCartBadge();
-        const _last = window.CartSystem.getLastMilkshake();
+        updateWarenkorbBadge();
+        const _last = window.WarenkorbSystem.getLastMilkshake();
         if (_last) showMilkshake(_last);
     </script>
 </body>

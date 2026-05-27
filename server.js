@@ -5,38 +5,38 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 const flavors = [
-  'Strawberry Classic',
-  'Double Chocolate',
-  'Vanilla Bean Dream',
-  'Pistachio Swirl',
-  'Salted Caramel Crunch',
-  'Banana Split Bliss',
+  'Erdbeer-Klassiker',
+  'Doppelte Schokolade',
+  'Vanilleschoten-Traum',
+  'Pistazien-Wirbel',
+  'Salzkaramell-Crunch',
+  'Bananensplit-Glück',
   'Cookies & Cream',
-  'Berry Cheesecake',
+  'Beeren-Cheesecake',
   'Mango Tango',
-  'Minty Chocolate Chip'
+  'Minz-Schoko-Splitter'
 ];
 
 const bases = [
-  'whole milk',
-  'almond milk',
-  'oat milk',
-  'soy milk',
-  'coconut milk',
-  'hazelnut milk'
+  'Vollmilch',
+  'Mandelmilch',
+  'Hafermilch',
+  'Sojamilch',
+  'Kokosmilch',
+  'Haselnussmilch'
 ];
 
 const toppings = [
-  'whipped cream and sprinkles',
-  'caramel drizzle',
-  'dark chocolate shavings',
-  'chopped nuts',
-  'fresh berries',
-  'cookie crumbs',
-  'marshmallows',
-  'cinnamon dust',
-  'chocolate syrup',
-  'toffee bits'
+  'Schlagsahne und Streuseln',
+  'Karamellsauce',
+  'Dunklen Schokoladenraspeln',
+  'Gehackten Nüssen',
+  'Frischen Beeren',
+  'Kekskrümeln',
+  'Marshmallows',
+  'Zimtstaub',
+  'Schokoladensauce',
+  'Toffeestückchen'
 ];
 
 const images = [
@@ -47,10 +47,10 @@ const images = [
 ];
 
 const prizes = [
-  { name: 'Golden Sip', description: 'Free extra topping and surprise bonus treat.' },
-  { name: 'Cool Coupon', description: '20% off your next milkshake order.' },
-  { name: 'Tasty Treat', description: 'A sweet thank-you gift for your next visit.' },
-  { name: 'VIP Straw', description: 'Priority access to new seasonal flavors.' }
+  { name: 'Goldener Schluck', description: 'Ein gratis Extra-Topping und eine süße Überraschung.' },
+  { name: 'Cooler Gutschein', description: '20% Rabatt auf deine nächste Milchshake-Bestellung.' },
+  { name: 'Leckere Belohnung', description: 'Ein kleines Dankeschön-Geschenk für deinen nächsten Besuch.' },
+  { name: 'VIP-Strohhalm', description: 'Bevorzugter Zugang zu neuen saisonalen Sorten.' }
 ];
 
 function randomItem(array) {
@@ -64,16 +64,16 @@ function buildMilkshake() {
   const imageUrl = randomItem(images);
 
   const priceMap = {
-    'Strawberry Classic': 4.99,
-    'Double Chocolate': 5.49,
-    'Vanilla Bean Dream': 5.19,
-    'Pistachio Swirl': 5.79,
-    'Salted Caramel Crunch': 5.89,
-    'Banana Split Bliss': 5.29,
+    'Erdbeer-Klassiker': 4.99,
+    'Doppelte Schokolade': 5.49,
+    'Vanilleschoten-Traum': 5.19,
+    'Pistazien-Wirbel': 5.79,
+    'Salzkaramell-Crunch': 5.89,
+    'Bananensplit-Glück': 5.29,
     'Cookies & Cream': 5.59,
-    'Berry Cheesecake': 5.69,
+    'Beeren-Cheesecake': 5.69,
     'Mango Tango': 5.39,
-    'Minty Chocolate Chip': 5.49
+    'Minz-Schoko-Splitter': 5.49
   };
 
   const cost = priceMap[flavor] || 5.25;
@@ -90,7 +90,7 @@ function buildMilkshake() {
 
   return {
     title: flavor,
-    description: `A creamy milkshake made with ${base}, finished with ${topping}.`,
+    description: `Ein cremiger Milchshake zubereitet mit ${base}, verfeinert mit ${topping}.`,
     cost: cost.toFixed(2),
     prizeName: prize.name,
     prizeDescription: prize.description,
@@ -107,5 +107,5 @@ app.get('/api/milkshake', (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`Milkshake backend running at http://localhost:${port}`);
+  console.log(`Milchshake-Backend läuft unter http://localhost:${port}`);
 });

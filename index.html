@@ -6,6 +6,66 @@
   <title>Milkshake Lounge</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
+    .recommendation-section {
+  padding: 4rem 2rem;
+}
+
+.recommendation-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.recommendation-content {
+  flex: 1;
+}
+
+.recommendation-quote {
+  font-size: 1.15rem;
+  font-style: italic;
+  line-height: 1.7;
+  margin: 1.25rem 0 0.75rem;
+  padding-left: 1.25rem;
+  border-left: 3px solid var(--accent-color, #e8a000); /* passe die Farbe an dein Theme an */
+  color: var(--text-color, #333);
+}
+
+.recommendation-author {
+  font-size: 0.9rem;
+  color: var(--muted-color, #888);
+  margin: 0;
+}
+
+.recommendation-image {
+  flex: 0 0 220px;
+}
+
+.portrait-img {
+  width: 220px;
+  height: 280px;
+  object-fit: cover;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+}
+
+@media (max-width: 640px) {
+  .recommendation-wrapper {
+    flex-direction: column-reverse;
+    text-align: center;
+  }
+  .recommendation-quote {
+    border-left: none;
+    border-top: 3px solid var(--accent-color, #e8a000);
+    padding-left: 0;
+    padding-top: 1rem;
+  }
+  .portrait-img {
+    width: 160px;
+    height: 200px;
+  }
+}
     :root {
       --cream: #fdf7ef;
       --brown: #3d2920;
@@ -282,35 +342,15 @@
     }
     .btn-white:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.15); }
 
-    /* FOOTER */
-    footer {
-      background: var(--brown);
-      color: #c9b5b0;
-      text-align: center;
-      padding: 32px 40px;
-      font-size: 0.85rem;
-    }
-    footer a { color: #c9a090; text-decoration: none; }
-
-    /* versuch: parallax-effekt beim scrollen — hat nicht funktioniert wie geplant */
-    /*
-    .hero-image img {
-      transform: translateY(calc(var(--scroll-y) * 0.3px));
-      transition: none;
-    }
-    window.addEventListener('scroll', () => {
-      document.documentElement.style.setProperty('--scroll-y', window.scrollY);
-    });
-    */
-
-    /* dark mode versucht aber aufgegeben */
-    /*
-    @media (prefers-color-scheme: dark) {
-      body { background: #1a0f0a; color: #fdf7ef; }
-      nav { background: rgba(26,15,10,0.9); }
-      .flavor-card { background: #2a1a14; }
-    }
-    */
+        /* FOOTER */
+        footer {
+        background: var(--brown);
+        color: #c9b5b0;
+        text-align: center;
+        padding: 32px 40px;
+        font-size: 0.85rem;
+        }
+        footer a { color: #c9a090; text-decoration: none; }
 
     @media (max-width: 768px) {
       .hero { grid-template-columns: 1fr; padding: 100px 24px 40px; text-align: center; }
@@ -331,7 +371,6 @@
   <nav>
     <a class="nav-logo" href="index.html">Milkshake Lounge</a>
     <div class="nav-links">
-      <a href="produkte.html" class="hide-mobile">Produkte</a>
       <a href="#sorten" class="hide-mobile">Sorten</a>
       <a href="#ablauf" class="hide-mobile">So funktioniert's</a>
       <a href="milkshake.html" class="nav-cta">Zum Mixer &rarr;</a>
@@ -352,7 +391,7 @@
     <div class="hero-image">
       <img src="assets/image-1779900833516.png" alt="Leckerer Milkshake">
       <div class="hero-badge">
-        <span>10+</span> Gewinnarten
+        <span>Empfohlen</span> von Alexander und 1000+ *Gästen*
       </div>
     </div>
   </section>
@@ -420,55 +459,40 @@
       </div>
       <div class="step">
         <div class="step-num">03</div>
-        <h3>Gewinn aufdecken</h3>
-        <p>Jeder Shake enthält einen Gewinn — vielleicht ein Gutschein, ein Bonus-Treat oder sogar VIP-Zugang.</p>
-      </div>
-      <div class="step">
-        <div class="step-num">04</div>
         <h3>In den Warenkorb</h3>
         <p>Shake speichern, weitere mixen und deine Lieblinge sammeln.</p>
       </div>
     </div>
   </section>
 
-  <!-- GEWINNE -->
-  <section class="section">
-    <p class="section-label">Jedes Mal gewinnen</p>
-    <h2>In jedem Shake steckt ein Gewinn</h2>
-    <div class="prizes-grid">
-      <div class="prize-card">
-        <div class="prize-name">Selten</div>
-        <h3>Golden Sip</h3>
-        <p>Ein kostenloses Extra-Topping plus eine Überraschung bei deiner nächsten Bestellung.</p>
-      </div>
-      <div class="prize-card">
-        <div class="prize-name">Gelegentlich</div>
-        <h3>Cool Coupon</h3>
-        <p>20 % Rabatt auf deinen nächsten Milkshake. Einfach einlösen und sparen.</p>
-      </div>
-      <div class="prize-card">
-        <div class="prize-name">Häufig</div>
-        <h3>Tasty Treat</h3>
-        <p>Ein süßes Dankeschön, das bei deinem nächsten Besuch auf dich wartet.</p>
-      </div>
-      <div class="prize-card">
-        <div class="prize-name">Besonders</div>
-        <h3>VIP Straw</h3>
-        <p>Frühzeitiger Zugang zu allen neuen saisonalen Sorten — vor allen anderen.</p>
-      </div>
+<!-- ALEXANDERS EMPFEHLUNG -->
+<section class="section recommendation-section">
+  <div class="recommendation-wrapper">
+    <div class="recommendation-content">
+      <p class="section-label">Neu entdeckter Favorit</p>
+      <h2>Alexanders Empfehlung!</h2>
+      <blockquote class="recommendation-quote">
+        "Diese Milchshakes sind so sahnig,fast so sahning wie meine eigene Creme. Keine Ahnung"
+      </blockquote>
+      <p class="recommendation-author">— Alexander, Stammgast seit 2022 hat keine Ahnung</p>
     </div>
-  </section>
-
+    <div class="recommendation-image">
+      <img src="alexander.png" alt="Alexander" class="portrait-img" />
+    </div>
+  </div>
+</section>
   <!-- CTA -->
   <section class="cta-banner">
     <h2>Bereit für deinen Shake?</h2>
-    <p>Starte den Mixer und entdecke, welche Sorte — und welchen Gewinn — das Universum heute für dich bereithat.</p>
+    <p>Starte den Mixer und entdecke, welche Sorte — und welchen Gewinn — das Universum heute für dich bereithat.
+        Auch wenn Alexander es verneint, diese Shakes schmecken sahniger als seine eigene Creme
+    </p>
     <a href="milkshake.html" class="btn-white">Jetzt mixen &rarr;</a>
   </section>
 
   <footer>
     <p>&copy; 2026 Milkshake Lounge &nbsp;&middot;&nbsp; <a href="produkte.html">Produkte</a> &nbsp;&middot;&nbsp; <a href="milkshake.html">Mixer</a> &nbsp;&middot;&nbsp; <a href="cart.html">Warenkorb</a></p>
-  </footer>
+  </footer  >
 
 </body>
 </html>

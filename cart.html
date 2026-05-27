@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Milkshake Cart</title>
+  <title>Milchshake-Warenkorb</title>
   <style>
     :root{background:#fdf7ef;color:#412a1f;font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif}
     *{box-sizing:border-box}
@@ -36,26 +36,26 @@
 <body>
   <div class="wrap">
     <header>
-      <div class="logo">Milkshake Cart</div>
+      <div class="logo">Milchshake-Warenkorb</div>
       <div class="actions">
-        <a href="milkshake.html">Back to Mixer</a>
-        <button id="clearCartButton">Clear cart</button>
+        <a href="milkshake.html">Zurück zum Mixer</a>
+        <button id="clearCartButton">Warenkorb leeren</button>
       </div>
     </header>
 
     <div class="card" id="cartCard">
-      <h1>Your Milkshake Cart</h1>
+      <h1>Dein Milchshake-Warenkorb</h1>
       <div class="list" id="cartList"></div>
       <div class="sum">
-        <strong>Total: <span id="cartTotal">€0.00</span></strong>
-        <a href="milkshake.html">Continue Shopping</a>
+        <strong>Gesamt: <span id="cartTotal">€0.00</span></strong>
+        <a href="milkshake.html">Weiter einkaufen</a>
       </div>
     </div>
 
     <div class="empty" id="emptyCart" style="display:none">
-      <h2>Your cart is empty</h2>
-      <p>Mix a milkshake and add it to the cart to see it here.</p>
-      <a href="milkshake.html">Go to Mixer</a>
+      <h2>Dein Warenkorb ist leer</h2>
+      <p>Mixe einen Milchshake und füge ihn zum Warenkorb hinzu, um ihn hier zu sehen.</p>
+      <a href="milkshake.html">Zum Mixer gehen</a>
     </div>
   </div>
 
@@ -92,15 +92,15 @@
         const el = document.createElement('div');
         el.className = 'item';
         el.innerHTML = `
-          <div class="img"><img src="${it?.imageUrl || KEY_CART_DEFAULT_IMAGE}" alt="${it?.title || 'Milkshake'}"></div>
+          <div class="img"><img src="${it?.imageUrl || KEY_CART_DEFAULT_IMAGE}" alt="${it?.title || 'Milchshake'}"></div>
           <div class="details">
-            <h3>${it?.title || 'Milkshake'}</h3>
+            <h3>${it?.title || 'Milchshake'}</h3>
             <p>${it?.description || ''}</p>
-            <p><strong>Prize:</strong> ${it?.prizeName || '—'}</p>
+            <p><strong>Gewinn:</strong> ${it?.prizeName || '—'}</p>
           </div>
           <div class="meta">
             <strong>€${cost.toFixed(2)}</strong>
-            <button class="remove" data-i="${i}">Remove</button>
+            <button class="remove" data-i="${i}">Entfernen</button>
           </div>`;
         cartList.appendChild(el);
       });
@@ -124,4 +124,3 @@
   </script>
 </body>
 </html>
-
