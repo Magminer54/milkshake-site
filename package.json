@@ -1,0 +1,12 @@
+{
+  "name": "milkshake-site",
+  "version": "1.0.0",
+  "description": "Static milkshake landing page with a simple backend API for milkshake generation.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}

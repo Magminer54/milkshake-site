@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Milkshake Details</title>
+  <style>
+    :root{background:#fdf7ef;color:#412a1f;font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif}
+    *{box-sizing:border-box}
+    body{margin:0;min-height:100vh;background:radial-gradient(circle at top right,#fff8f1 0%,#f4e3d1 40%,#fdf7ef 100%)}
+    .wrap{max-width:1400px;margin:0 auto;padding:32px 4vw 48px}
+    header{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:32px}
+    .logo{font-size:.95rem;letter-spacing:.18em;text-transform:uppercase;color:#7a5c4f}
+    .actions{display:flex;gap:12px;flex-wrap:wrap}
+    a,.actions button{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;color:#8d5f4f;font-weight:700;padding:10px 16px;background:rgba(141,95,79,.12);border-radius:999px;border:none;cursor:pointer;transition:transform .2s ease,background .2s ease}
+    a:hover,.actions button:hover{transform:translateY(-1px);background:rgba(141,95,79,.2)}
+
+    .grid{display:grid;grid-template-columns:1fr 1.1fr;gap:32px;align-items:start}
+    @media (max-width:900px){.grid{grid-template-columns:1fr;}}
+
+    .image{border-radius:28px;overflow:hidden;background:#f8f0ea;min-height:360px;box-shadow:0 20px 50px rgba(109,68,42,.09)}
+    .image img{width:100%;height:100%;min-height:360px;object-fit:cover;display:block}
+
+    .card{padding:28px;background:rgba(255,255,255,.95);border-radius:40px;box-shadow:0 20px 60px rgba(109,68,42,.12)}
+    h1{margin:0 0 16px;font-size:clamp(2.2rem,3.8vw,4rem);line-height:1.02;color:#3d2920}
+    p{margin:0 0 16px;line-height:1.8;color:#5f463a;font-size:1.05rem}
+
+    .specs{display:grid;gap:10px;margin-top:18px;padding:18px;background:rgba(245,237,228,.9);border-radius:28px}
+    .specs .row{display:flex;justify-content:space-between;gap:16px;color:#5f463a}
+    .specs strong{color:#3d2920}
+
+    .btn{display:inline-flex;align-items:center;justify-content:center;padding:16px 26px;border-radius:999px;border:none;font-weight:800;cursor:pointer;transition:transform .2s ease,background .2s ease}
+    .btn-primary{background:#8d5f4f;color:#fff9f0}
+    .btn-primary:hover{transform:translateY(-1px);background:#a06d5f}
+    .btn-disabled{opacity:.6;cursor:not-allowed}
+
+    .empty{padding:42px;text-align:center;background:rgba(255,255,255,.9);border-radius:34px;box-shadow:0 14px 40px rgba(109,68,42,.08)}
+    .empty h2{margin:0 0 18px;color:#593b2e}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="logo">Milkshake Details</div>
+      <div class="actions">
+        <a class="nav-link" href="cart.html">Cart <span id="cartBadge" style="background:rgba(141,95,79,.16);padding:4px 10px;border-radius:999px;font-size:.9rem;font-weight:700;color:#5f463a"></span></a>
+        <a href="milkshake.html">Back to Mixer</a>
+      </div>
+    </header>
+
+    <div id="emptyState" class="empty" style="display:none">
+      <h2>No milkshake selected yet</h2>
+      <p>Mix a milkshake first. Then this page will show its image, cost, and prize.</p>
+      <a href="milkshake.html" class="btn btn-primary" style="margin-top:8px;text-decoration:none">Go to Mixer</a>
+    </div>
+
+    <div id="content" class="grid" style="display:none">
+      <div class="image"><img id="detailImg" src="" alt="Milkshake" /></div>
+      <div class="card">
+        <h1 id="detailTitle">-</h1>
+        <p id="detailDesc">-</p>
+
+        <div class="specs">
+          <div class="row"><strong>Cost</strong><span id="detailCost">€0.00</span></div>
+          <div class="row"><strong>Prize</strong><span id="detailPrize">-</span></div>
+          <div class="row"><strong>Flavor</strong><span id="detailFlavor">-</span></div>
+        </div>
+
+        <div style="display:flex;gap:14px;flex-wrap:wrap;align-items:center;margin-top:20px">
+          <button id="addToCartButton" class="btn btn-primary">Add to cart</button>
+          <a href="cart.html" class="btn" style="background:rgba(141,95,79,.12);color:#5f463a;text-decoration:none">Go to cart</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="cart-system.js"></script>
+  <script>
+    const $ = (id) => document.getElementById(id);
+
+    const emptyState      = $('emptyState');
+    const content         = $('content');
+    const detailImg       = $('detailImg');
+    const detailTitle     = $('detailTitle');
+    const detailDesc      = $('detailDesc');
+    const detailCost      = $('detailCost');
+    const detailPrize     = $('detailPrize');
+    const detailFlavor    = $('detailFlavor');
+    const addToCartButton = $('addToCartButton');
+    const cartBadge       = $('cartBadge');
+
+    const updateBadge = () => window.CartSystem.updateBadge(cartBadge);
+
+    const render = () => {
+      updateBadge();
+      const milkshake = window.CartSystem.getLastMilkshake();
+      if (!milkshake) {
+        content.style.display = 'none';
+        emptyState.style.display = 'block';
+        addToCartButton.disabled = true;
+        addToCartButton.classList.add('btn-disabled');
+        return;
+      }
+
+      content.style.display = 'grid';
+      emptyState.style.display = 'none';
+
+      detailImg.src           = milkshake.actualLook || milkshake.imageUrl || 'assets/image-1779900833516.png';
+      detailTitle.textContent  = milkshake.title || '-';
+      detailDesc.textContent   = milkshake.description || '';
+      detailCost.textContent   = `€${Number(milkshake.cost || 0).toFixed(2)}`;
+      detailPrize.textContent  = `${milkshake.prizeName || '-'}${milkshake.prizeDescription ? ' — ' + milkshake.prizeDescription : ''}`;
+      detailFlavor.textContent = milkshake.title || '-';
+
+      addToCartButton.disabled = false;
+      addToCartButton.classList.remove('btn-disabled');
+    };
+
+    addToCartButton.addEventListener('click', () => {
+      const milkshake = window.CartSystem.getLastMilkshake();
+      if (!milkshake) return;
+      window.CartSystem.addMilkshake(milkshake);
+      updateBadge();
+      addToCartButton.textContent = 'Added! ✓';
+      addToCartButton.disabled = true;
+      addToCartButton.classList.add('btn-disabled');
+      setTimeout(() => {
+        addToCartButton.textContent = 'Add to cart';
+        addToCartButton.disabled = false;
+        addToCartButton.classList.remove('btn-disabled');
+      }, 1500);
+    });
+
+    render();
+  </script>
+</body>
+</html>
+

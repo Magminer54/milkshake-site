@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Produkte - Hello world inc.</title>
+    <style>
+        *, *::before, *::after { box-sizing: border-box; }
+        body { margin: 0; font-family: Arial, sans-serif; background: #0f1114; color: #f2f2f2; }
+        a { color: inherit; text-decoration: none; }
+        .site-header { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 18px 20px; background: rgba(12,14,18,0.95); border-bottom: 1px solid rgba(255,255,255,0.08); position: sticky; top: 0; z-index: 10; }
+        .brand { display: inline-flex; align-items: center; gap: 12px; font-weight: 700; }
+        .brand-mark { width: 38px; height: 38px; border-radius: 12px; display: inline-flex; align-items: center; justify-content: center; background: #1f2937; color: #fff; }
+        .nav-toggle { position: absolute; opacity: 0; pointer-events: none; }
+        .nav-toggle-label { display: inline-flex; width: 44px; height: 44px; align-items: center; justify-content: center; border-radius: 14px; border: 1px solid rgba(255,255,255,0.08); cursor: pointer; }
+        .nav-toggle-label span, .nav-toggle-label span::before, .nav-toggle-label span::after { display: block; width: 20px; height: 2px; background: #f2f2f2; position: relative; transition: transform .25s ease; }
+        .nav-toggle-label span::before, .nav-toggle-label span::after { content: ''; position: absolute; left: 0; }
+        .nav-toggle-label span::before { top: -6px; }
+        .nav-toggle-label span::after { top: 6px; }
+        .main-nav { position: absolute; top: 100%; right: 20px; left: 20px; display: flex; flex-direction: column; gap: 14px; margin: 0; padding: 18px; border-radius: 20px; background: rgba(10,12,16,0.98); border: 1px solid rgba(255,255,255,0.08); opacity: 0; max-height: 0; overflow: hidden; transform: translateY(-10px); transition: opacity .25s ease, max-height .25s ease, transform .25s ease; }
+        .nav-toggle:checked ~ .main-nav { opacity: 1; max-height: 320px; transform: translateY(0); }
+        .main-nav a { padding: 12px 16px; border-radius: 14px; background: rgba(255,255,255,0.03); }
+        .main-nav a:hover { background: rgba(255,255,255,0.08); }
+        main { max-width: 1100px; margin: 0 auto; padding: 26px 20px 40px; }
+        .page-heading { margin: 0 0 16px; font-size: clamp(2rem, 4vw, 3rem); }
+        .intro-card { padding: 24px; border-radius: 22px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); }
+        .intro-card p { margin: 0; color: #d4d9e0; }
+        .product-grid { display: grid; gap: 18px; margin-top: 24px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+        .product-card { padding: 22px; border-radius: 20px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); }
+        .product-card h3 { margin-top: 0; margin-bottom: 10px; }
+        .product-card p { margin: 0; color: #cbd2dd; }
+        .feature-list { margin-top: 24px; display: grid; gap: 14px; }
+        .feature-list li { padding: 16px 18px; border-radius: 16px; background: rgba(255,255,255,0.03); list-style: none; }
+        .footer { text-align: center; padding: 24px 20px 40px; color: #7a8697; }
+        @media (min-width: 900px) { .nav-toggle-label { display: none; } .main-nav { position: static; opacity: 1; max-height: none; transform: none; flex-direction: row; gap: 18px; padding: 0; background: transparent; border: none; } .main-nav a { padding: 10px 12px; background: transparent; } }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <a class="brand" href="index.html"><span class="brand-mark">HW</span><span class="brand-name">Hello world inc.</span></a>
+        <input class="nav-toggle" id="nav-toggle" type="checkbox">
+        <label class="nav-toggle-label" for="nav-toggle" aria-label="Navigation umschalten"><span></span></label>
+        <nav class="main-nav">
+            <a href="index.html">Start</a>
+            <a href="produkte.html">Produkte</a>
+            <a href="business.html">Business</a>
+            <a href="about.html">Über uns</a>
+            <a href="contact.html">Kontakt</a>
+        </nav>
+    </header>
+    <main>
+        <h1 class="page-heading">Produkte</h1>
+        <section class="intro-card">
+            <p>Entdecke unsere Produkte: klar strukturiert, einfach erklärt und perfekt für eine moderne Website, die auf mobile Besucher ausgerichtet ist.</p>
+        </section>
+        <section class="product-grid">
+            <article class="product-card">
+                <h3>Produkt A</h3>
+                <p>Perfekt für Einsteiger: einfache Bedienung, schnelles Onboarding und direkte Ergebnisse.</p>
+            </article>
+            <article class="product-card">
+                <h3>Produkt B</h3>
+                <p>Ideal für kleine Teams: smartes Reporting, Skalierbarkeit und klare Vorteile.</p>
+            </article>
+            <article class="product-card">
+                <h3>Produkt C</h3>
+                <p>Für Profis: umfangreiche Funktionen, flexible Anpassungen und modernes Design.</p>
+            </article>
+        </section>
+        <section class="feature-list">
+            <li>Klare Darstellung der Produktvorteile</li>
+            <li>Mobile Navigation dank Hamburger-Menü</li>
+            <li>Reduziertes Layout ohne Ablenkung</li>
+        </section>
+    </main>
+    <footer class="footer">© 2026 Hello world inc. Alle Rechte vorbehalten.</footer>
+</body>
+</html>
