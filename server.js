@@ -4,17 +4,18 @@ const path = require('path');
 const app = express();
 const port = process.env.PORT || 3000;
 
+// Deutsche Sorten passend zum Frontend
 const flavors = [
-  'Erdbeer-Klassiker',
+  'Erdbeer-Klassik',
   'Doppelte Schokolade',
-  'Vanilleschoten-Traum',
+  'Vanilletraum',
   'Pistazien-Wirbel',
   'Salzkaramell-Crunch',
-  'Bananensplit-Glück',
-  'Cookies & Cream',
-  'Beeren-Cheesecake',
-  'Mango Tango',
-  'Minz-Schoko-Splitter'
+  'Bananensplit-Genuss',
+  'Keks & Creme',
+  'Beeren-Käsekuchen',
+  'Mango-Tango',
+  'Minz-Schoko-Splinter'
 ];
 
 const bases = [
@@ -27,30 +28,23 @@ const bases = [
 ];
 
 const toppings = [
-  'Schlagsahne und Streuseln',
+  'Sahne und Streusel',
   'Karamellsauce',
-  'Dunklen Schokoladenraspeln',
-  'Gehackten Nüssen',
-  'Frischen Beeren',
-  'Kekskrümeln',
+  'Dunkle Schokoraspeln',
+  'Gehackte Nüsse',
+  'Frische Beeren',
+  'Keksstückchen',
   'Marshmallows',
-  'Zimtstaub',
-  'Schokoladensauce',
-  'Toffeestückchen'
-];
-
-const images = [
-  'assets/image-1779900833516.png',
-  'assets/image-1779900840670.png',
-  'assets/image-1779900892165.png',
-  'assets/image-1779900918696.png'
+  'Zimt',
+  'Schokosirup',
+  'Toffee-Stückchen'
 ];
 
 const prizes = [
-  { name: 'Goldener Schluck', description: 'Ein gratis Extra-Topping und eine süße Überraschung.' },
-  { name: 'Cooler Gutschein', description: '20% Rabatt auf deine nächste Milchshake-Bestellung.' },
-  { name: 'Leckere Belohnung', description: 'Ein kleines Dankeschön-Geschenk für deinen nächsten Besuch.' },
-  { name: 'VIP-Strohhalm', description: 'Bevorzugter Zugang zu neuen saisonalen Sorten.' }
+  { name: 'Gratis Upgrade', description: 'Ein kostenloses Extra-Topping bei deiner nächsten Lounge-Bestellung.' },
+  { name: '2-für-1 Gutschein', description: 'Bringe einen Freund mit und erhalte den zweiten Shake umsonst.' },
+  { name: 'Kein Gewinn', description: 'Vielen Dank fürs Mitmachen! Probiere es beim nächsten Shake erneut.' },
+  { name: 'VIP-Strohhalm', description: 'Priorisierter Zugang zu unseren exklusiven, saisonalen Sorten.' }
 ];
 
 function randomItem(array) {
@@ -61,19 +55,18 @@ function buildMilkshake() {
   const flavor = randomItem(flavors);
   const base = randomItem(bases);
   const topping = randomItem(toppings);
-  const imageUrl = randomItem(images);
 
   const priceMap = {
-    'Erdbeer-Klassiker': 4.99,
+    'Erdbeer-Klassik': 4.99,
     'Doppelte Schokolade': 5.49,
-    'Vanilleschoten-Traum': 5.19,
+    'Vanilletraum': 5.19,
     'Pistazien-Wirbel': 5.79,
     'Salzkaramell-Crunch': 5.89,
-    'Bananensplit-Glück': 5.29,
-    'Cookies & Cream': 5.59,
-    'Beeren-Cheesecake': 5.69,
-    'Mango Tango': 5.39,
-    'Minz-Schoko-Splitter': 5.49
+    'Bananensplit-Genuss': 5.29,
+    'Keks & Creme': 5.59,
+    'Beeren-Käsekuchen': 5.69,
+    'Mango-Tango': 5.39,
+    'Minz-Schoko-Splinter': 5.49
   };
 
   const cost = priceMap[flavor] || 5.25;
@@ -90,22 +83,26 @@ function buildMilkshake() {
 
   return {
     title: flavor,
-    description: `Ein cremiger Milchshake zubereitet mit ${base}, verfeinert mit ${topping}.`,
+    description: `Ein cremiger Milkshake mit ${base}, verfeinert mit ${topping}.`,
     cost: cost.toFixed(2),
     prizeName: prize.name,
-    prizeDescription: prize.description,
-    imageUrl,
-    actualLook: imageUrl,
-    prizeTier: prize.name
+    prizeDescription: prize.description
   };
 }
 
-app.use(express.static(path.join(__dirname, '.')));
+// Statische Dateien bereitstellen
+app.use(express.static(__dirname));
 
+// API-Endpunkt für den Mixer
 app.get('/api/milkshake', (req, res) => {
   res.json(buildMilkshake());
 });
 
+// Fallback für HTML-Routen
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'index.html'));
+});
+
 app.listen(port, () => {
-  console.log(`Milchshake-Backend läuft unter http://localhost:${port}`);
+  console.log(`Milkshake Server läuft auf http://localhost:${port}`);
 });

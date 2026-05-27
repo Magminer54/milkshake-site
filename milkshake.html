@@ -333,11 +333,11 @@
         <footer>Genieße das cremigste Milkshake-Erlebnis im Web.</footer>
     </div>
     <script src="cart-system.js"></script>
-    <script>
+  <script>
         const flavors = [
-            'Erdbeer Klassik', 'Doppelte Schokolade', 'Vanilletraum',
-            'Pistazien Swirl', 'Saltkaramell Crunch', 'Banana Split Genuss',
-            'Cookies & Cream', 'Beeren Cheesecake', 'Mango Tango', 'Minz-Schoko Chip'
+            'Erdbeer-Klassik', 'Doppelte Schokolade', 'Vanilletraum',
+            'Pistazien-Wirbel', 'Salzkaramell-Crunch', 'Bananensplit-Genuss',
+            'Keks & Creme', 'Beeren-Käsekuchen', 'Mango-Tango', 'Minz-Schoko-Splinter'
         ];
         const bases = ['Vollmilch', 'Mandelmilch', 'Hafermilch', 'Sojamilch', 'Kokosmilch', 'Haselnussmilch'];
         const toppings = [
@@ -346,57 +346,58 @@
             'Zimt', 'Schokosirup', 'Toffee-Stückchen'
         ];
 
-        // Funktion, um einen passenden CSS-Gradienten basierend auf dem Geschmack zu generieren
         function getGradientForFlavor(flavor) {
             switch (flavor) {
-                case 'Erdbeer Klassik':
-                case 'Beeren Cheesecake':
-                    return 'linear-gradient(135deg, #ffafbd 0%, #ffc3a0 100%)'; // Rosa/Beere
+                case 'Erdbeer-Klassik':
+                case 'Beeren-Käsekuchen':
+                    return 'linear-gradient(135deg, #ffafbd 0%, #ffc3a0 100%)';
                 case 'Doppelte Schokolade':
-                    return 'linear-gradient(135deg, #4b382a 0%, #8d5f4f 100%)'; // Dunkelbraun
+                    return 'linear-gradient(135deg, #4b382a 0%, #8d5f4f 100%)';
                 case 'Vanilletraum':
-                case 'Banana Split Genuss':
-                    return 'linear-gradient(135deg, #fff3b0 0%, #caa75b 100%)'; // Gelblich/Creme
-                case 'Pistazien Swirl':
-                    return 'linear-gradient(135deg, #b5e3a3 0%, #7ca982 100%)'; // Pistaziengrün
-                case 'Saltkaramell Crunch':
-                    return 'linear-gradient(135deg, #e29578 0%, #dd6e42 100%)'; // Karamell/Orange
-                case 'Cookies & Cream':
-                    return 'linear-gradient(135deg, #d3d3d3 0%, #4a4a4a 100%)'; // Keksgrau/Schwarz
-                case 'Mango Tango':
-                    return 'linear-gradient(135deg, #f9d423 0%, #ff4e50 100%)'; // Mango/Orange-Rot
-                case 'Minz-Schoko Chip':
-                    return 'linear-gradient(135deg, #93f5d5 0%, #4b382a 100%)'; // Mint/Schoko
+                case 'Bananensplit-Genuss':
+                    return 'linear-gradient(135deg, #fff3b0 0%, #caa75b 100%)';
+                case 'Pistazien-Wirbel':
+                    return 'linear-gradient(135deg, #b5e3a3 0%, #7ca982 100%)';
+                case 'Salzkaramell-Crunch':
+                    return 'linear-gradient(135deg, #e29578 0%, #dd6e42 100%)';
+                case 'Keks & Creme':
+                    return 'linear-gradient(135deg, #d3d3d3 0%, #4a4a4a 100%)';
+                case 'Mango-Tango':
+                    return 'linear-gradient(135deg, #f9d423 0%, #ff4e50 100%)';
+                case 'Minz-Schoko-Splinter':
+                    return 'linear-gradient(135deg, #93f5d5 0%, #4b382a 100%)';
                 default:
-                    return 'linear-gradient(135deg, #e6d5c3 0%, #c4a28f 100%)'; // Standard-Creme
+                    return 'linear-gradient(135deg, #e6d5c3 0%, #c4a28f 100%)';
             }
         }
 
-        const mixButton        = document.getElementById('mixButton');
+        const mixButton             = document.getElementById('mixButton');
         const addToWarenkorbButton  = document.getElementById('addToWarenkorbButton');
-        const detailsLink      = document.getElementById('detailsLink');
-        const cartCount        = document.getElementById('cartCount');
-        const resultTitle      = document.getElementById('resultTitle');
-        const resultText       = document.getElementById('resultText');
-        const resultCost       = document.getElementById('resultCost');
-        const shakePhoto       = document.getElementById('shakePhoto');
-        const shakePreview     = document.getElementById('shakePreview');
+        const detailsLink           = document.getElementById('detailsLink');
+        const cartCount             = document.getElementById('cartCount');
+        const resultTitle           = document.getElementById('resultTitle');
+        const resultText            = document.getElementById('resultText');
+        const resultCost            = document.getElementById('resultCost');
+        const shakePhoto            = document.getElementById('shakePhoto');
+        const shakePreview          = document.getElementById('shakePreview');
 
         function randomItem(arr) {
             return arr[Math.floor(Math.random() * arr.length)];
         }
 
         function updateWarenkorbBadge() {
-            if (window.WarenkorbSystem && typeof window.WarenkorbSystem.updateBadge === 'function') {
-                window.WarenkorbSystem.updateBadge(cartCount);
+            // Greift jetzt korrekt auf CartSystem zu
+            if (window.CartSystem) {
+                const cart = window.CartSystem.getCart();
+                if (cartCount) cartCount.textContent = cart.length;
             }
         }
 
         function addToWarenkorb() {
-            if (!window.WarenkorbSystem) return;
-            const last = window.WarenkorbSystem.getLastMilkshake();
+            if (!window.CartSystem) return;
+            const last = window.CartSystem.getLastMilkshake();
             if (!last) return;
-            window.WarenkorbSystem.addMilkshake(last);
+            window.CartSystem.addMilkshake(last);
             updateWarenkorbBadge();
             addToWarenkorbButton.textContent = 'Hinzugefügt ✓';
             setTimeout(() => (addToWarenkorbButton.textContent = 'In den Warenkorb'), 1400);
@@ -417,8 +418,9 @@
 
             try {
                 showMilkshake(data);
-                if (window.WarenkorbSystem && typeof window.WarenkorbSystem.setLastMilkshake === 'function') {
-                    window.WarenkorbSystem.setLastMilkshake(data);
+                if (window.CartSystem) {
+                    // Speichert es so ab, dass details.html und cart.html es lesen können
+                    localStorage.setItem(window.CartSystem.KEY_LAST, JSON.stringify(data));
                 }
                 addToWarenkorbButton.disabled = false;
             } catch (err) {
@@ -445,7 +447,6 @@
             resultText.textContent   = data.description;
             resultCost.textContent   = `€${Number(data.cost).toFixed(2)}`;
             
-            // Nutzt den CSS-Gradienten anstelle des <img> Tags
             const gradient = getGradientForFlavor(data.title);
             shakePhoto.innerHTML     = `<div style="width: 100%; height: 100%; background: ${gradient};"></div>`;
             
@@ -458,9 +459,10 @@
         mixButton.addEventListener('click', createMilkshake);
         addToWarenkorbButton.addEventListener('click', addToWarenkorb);
 
+        // Initialisierung beim Laden der Seite
         updateWarenkorbBadge();
-        if (window.WarenkorbSystem && typeof window.WarenkorbSystem.getLastMilkshake === 'function') {
-            const _last = window.WarenkorbSystem.getLastMilkshake();
+        if (window.CartSystem) {
+            const _last = window.CartSystem.getLastMilkshake();
             if (_last) showMilkshake(_last);
         }
     </script>
