@@ -212,6 +212,29 @@
             font-weight: 800;
             color: #8d5f4f;
         }
+        /* „In den Warenkorb“-Button im Original-Style */
+        #addToWarenkorbButton {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transition: all 0.2s ease;
+        }
+
+        /* Wenn ein Milkshake gemixt wurde, wird der Button GRÜN */
+        #addToWarenkorbButton:not(:disabled) {
+            opacity: 1;
+            cursor: pointer;
+            background-color: hsl(123, 62%, 47%); /* Schönes, frisches Grün */
+            color: #ffffff;
+            border-color: hsl(123, 62%, 47%);
+        }
+
+        /* Hover-Effekt für das Grün */
+        #addToWarenkorbButton:not(:disabled):hover {
+            background-color: #88c714; /* Etwas dunkleres Grün */
+            border-color: #88c714;
+            transform: translateY(-1px);
+        }
+        
         .prize-badge {
             margin-top: 18px;
             display: inline-flex;
@@ -287,7 +310,7 @@
                             <div class="shake-photo" id="shakePhoto">
                                 <img src="assets/image-1779900833516.png" alt="Milkshake preview">
                             </div>
-                            <div class="preview-label">Deine Milkshake-Vorschau</div>
+                            <div class="preview-label">Dein Milkshake als Farbe</div>
                         </div>
                         <div class="result-text">
                             <h2 id="resultTitle">Dein Milkshake erscheint hier</h2>
@@ -304,7 +327,6 @@
                     <button class="secondary-button" id="addToWarenkorbButton" disabled>In den Warenkorb</button>
                     <a class="secondary-link" id="detailsLink" href="milkshake-details.html">Details ansehen</a>
                 </div>
-                <p class="note">Tipp: Aktualisiere die Seite jederzeit für neue Geschmacksrichtungen.</p>
             </div>
         </section>
 
@@ -324,6 +346,32 @@
             'Zimt', 'Schokosirup', 'Toffee-Stückchen'
         ];
 
+        // Funktion, um einen passenden CSS-Gradienten basierend auf dem Geschmack zu generieren
+        function getGradientForFlavor(flavor) {
+            switch (flavor) {
+                case 'Erdbeer Klassik':
+                case 'Beeren Cheesecake':
+                    return 'linear-gradient(135deg, #ffafbd 0%, #ffc3a0 100%)'; // Rosa/Beere
+                case 'Doppelte Schokolade':
+                    return 'linear-gradient(135deg, #4b382a 0%, #8d5f4f 100%)'; // Dunkelbraun
+                case 'Vanilletraum':
+                case 'Banana Split Genuss':
+                    return 'linear-gradient(135deg, #fff3b0 0%, #caa75b 100%)'; // Gelblich/Creme
+                case 'Pistazien Swirl':
+                    return 'linear-gradient(135deg, #b5e3a3 0%, #7ca982 100%)'; // Pistaziengrün
+                case 'Saltkaramell Crunch':
+                    return 'linear-gradient(135deg, #e29578 0%, #dd6e42 100%)'; // Karamell/Orange
+                case 'Cookies & Cream':
+                    return 'linear-gradient(135deg, #d3d3d3 0%, #4a4a4a 100%)'; // Keksgrau/Schwarz
+                case 'Mango Tango':
+                    return 'linear-gradient(135deg, #f9d423 0%, #ff4e50 100%)'; // Mango/Orange-Rot
+                case 'Minz-Schoko Chip':
+                    return 'linear-gradient(135deg, #93f5d5 0%, #4b382a 100%)'; // Mint/Schoko
+                default:
+                    return 'linear-gradient(135deg, #e6d5c3 0%, #c4a28f 100%)'; // Standard-Creme
+            }
+        }
+
         const mixButton        = document.getElementById('mixButton');
         const addToWarenkorbButton  = document.getElementById('addToWarenkorbButton');
         const detailsLink      = document.getElementById('detailsLink');
@@ -339,10 +387,13 @@
         }
 
         function updateWarenkorbBadge() {
-            window.WarenkorbSystem.updateBadge(cartCount);
+            if (window.WarenkorbSystem && typeof window.WarenkorbSystem.updateBadge === 'function') {
+                window.WarenkorbSystem.updateBadge(cartCount);
+            }
         }
 
         function addToWarenkorb() {
+            if (!window.WarenkorbSystem) return;
             const last = window.WarenkorbSystem.getLastMilkshake();
             if (!last) return;
             window.WarenkorbSystem.addMilkshake(last);
@@ -355,48 +406,49 @@
             mixButton.disabled = true;
             mixButton.textContent = 'Wird gemixt…';
             let data;
+            
             try {
                 const res = await fetch('/api/milkshake');
+                if (!res.ok) throw new Error('API Error');
                 data = await res.json();
             } catch {
                 data = createLocalMilkshake();
             }
-            showMilkshake(data);
-            window.WarenkorbSystem.setLastMilkshake(data);
-            addToWarenkorbButton.disabled = false;
-            mixButton.disabled = false;
-            mixButton.textContent = 'Milkshake mixen';
+
+            try {
+                showMilkshake(data);
+                if (window.WarenkorbSystem && typeof window.WarenkorbSystem.setLastMilkshake === 'function') {
+                    window.WarenkorbSystem.setLastMilkshake(data);
+                }
+                addToWarenkorbButton.disabled = false;
+            } catch (err) {
+                console.error("Fehler beim Anzeigen oder Speichern:", err);
+            } finally {
+                mixButton.disabled = false;
+                mixButton.textContent = 'Milkshake mixen';
+            }
         }
 
         function createLocalMilkshake() {
             const flavor  = randomItem(flavors);
             const base    = randomItem(bases);
             const topping = randomItem(toppings);
-            const image   = selectImage();
             return {
                 title: flavor,
                 description: `Ein cremiger Milkshake mit ${base}, verfeinert mit ${topping}.`,
-                cost: (Math.random() * 3 + 4.5).toFixed(2),imageUrl: image,
-                actualLook: image,
+                cost: (Math.random() * 3 + 4.5).toFixed(2)
             };
-        }
-
-        
-
-        function selectImage() {
-            return randomItem([
-                'assets/image-1779900833516.png',
-                'assets/image-1779900840670.png',
-                'assets/image-1779900892165.png',
-                'assets/image-1779900918696.png'
-            ]);
         }
 
         function showMilkshake(data) {
             resultTitle.textContent  = data.title;
             resultText.textContent   = data.description;
             resultCost.textContent   = `€${Number(data.cost).toFixed(2)}`;
-            shakePhoto.innerHTML     = `<img src="${data.imageUrl || 'assets/image-1779900833516.png'}" alt="${data.title} preview">`;
+            
+            // Nutzt den CSS-Gradienten anstelle des <img> Tags
+            const gradient = getGradientForFlavor(data.title);
+            shakePhoto.innerHTML     = `<div style="width: 100%; height: 100%; background: ${gradient};"></div>`;
+            
             shakePreview.classList.remove('shaking');
             void shakePreview.offsetWidth;
             shakePreview.classList.add('shaking');
@@ -406,10 +458,11 @@
         mixButton.addEventListener('click', createMilkshake);
         addToWarenkorbButton.addEventListener('click', addToWarenkorb);
 
-        // Initialise: restore last milkshake + sync cart badge
         updateWarenkorbBadge();
-        const _last = window.WarenkorbSystem.getLastMilkshake();
-        if (_last) showMilkshake(_last);
+        if (window.WarenkorbSystem && typeof window.WarenkorbSystem.getLastMilkshake === 'function') {
+            const _last = window.WarenkorbSystem.getLastMilkshake();
+            if (_last) showMilkshake(_last);
+        }
     </script>
 </body>
 </html>
