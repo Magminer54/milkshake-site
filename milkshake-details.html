@@ -1,137 +1,149 @@
 <!doctype html>
 <html lang="de">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Milkshake Details</title>
   <style>
-    :root{background:#fdf7ef;color:#412a1f;font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif}
-    *{box-sizing:border-box}
-    body{margin:0;min-height:100vh;background:radial-gradient(circle at top right,#fff8f1 0%,#f4e3d1 40%,#fdf7ef 100%)}
-    .wrap{max-width:1400px;margin:0 auto;padding:32px 4vw 48px}
-    header{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:32px}
-    .logo{font-size:.95rem;letter-spacing:.18em;text-transform:uppercase;color:#7a5c4f}
-    .actions{display:flex;gap:12px;flex-wrap:wrap}
-    a,.actions button{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;color:#8d5f4f;font-weight:700;padding:10px 16px;background:rgba(141,95,79,.12);border-radius:999px;border:none;cursor:pointer;transition:transform .2s ease,background .2s ease}
-    a:hover,.actions button:hover{transform:translateY(-1px);background:rgba(141,95,79,.2)}
+    :root { font-family: 'Segoe UI', sans-serif; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { min-height: 100vh; background: radial-gradient(circle at top right, #fff8f1, #f4e3d1 50%, #fdf7ef); color: #412a1f; }
 
-    .grid{display:grid;grid-template-columns:1fr 1.1fr;gap:32px;align-items:start}
-    @media (max-width:900px){.grid{grid-template-columns:1fr;}}
+    header {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 20px 48px; border-bottom: 1px solid rgba(141,95,79,.12);
+      background: rgba(253,247,239,.9); backdrop-filter: blur(8px);
+      position: sticky; top: 0; z-index: 10;
+    }
+    .logo { font-size: 0.85rem; letter-spacing: 0.18em; text-transform: uppercase; color: #7a5c4f; }
+    .hlinks { display: flex; gap: 10px; }
+    .hlinks a {
+      text-decoration: none; color: #8d5f4f; font-weight: 700; padding: 9px 18px;
+      background: rgba(141,95,79,.12); border-radius: 999px; font-size: 0.9rem; transition: background 0.2s;
+    }
+    .hlinks a:hover { background: rgba(141,95,79,.22); }
 
-    .image{border-radius:28px;overflow:hidden;background:#f8f0ea;min-height:360px;box-shadow:0 20px 50px rgba(109,68,42,.09)}
-    .image img{width:100%;height:100%;min-height:360px;object-fit:cover;display:block}
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: calc(100vh - 65px);
+    }
 
-    .card{padding:28px;background:rgba(255,255,255,.95);border-radius:40px;box-shadow:0 20px 60px rgba(109,68,42,.12)}
-    h1{margin:0 0 16px;font-size:clamp(2.2rem,3.8vw,4rem);line-height:1.02;color:#3d2920}
-    p{margin:0 0 16px;line-height:1.8;color:#5f463a;font-size:1.05rem}
+    /* Left: big swatch */
+    .left {
+      display: flex; align-items: center; justify-content: center;
+      padding: 56px;
+      background: rgba(255,255,255,.5);
+      border-right: 1px solid rgba(196,162,143,.25);
+    }
+    .big-swatch {
+      width: 320px; height: 420px; border-radius: 40px;
+      background: linear-gradient(135deg,#e6d5c3,#c4a28f);
+      box-shadow: 0 40px 100px rgba(109,68,42,.2);
+    }
 
-    .specs{display:grid;gap:10px;margin-top:18px;padding:18px;background:rgba(245,237,228,.9);border-radius:28px}
-    .specs .row{display:flex;justify-content:space-between;gap:16px;color:#5f463a}
-    .specs strong{color:#3d2920}
+    /* Right: info */
+    .right {
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 64px 72px; gap: 24px;
+    }
+    .right h1 { font-size: clamp(2rem, 3vw, 3.5rem); color: #3d2920; line-height: 1.1; }
+    .right p { color: #6b4d42; line-height: 1.7; font-size: 1rem; }
+    .price { font-size: 3rem; font-weight: 800; color: #8d5f4f; }
 
-    .btn{display:inline-flex;align-items:center;justify-content:center;padding:16px 26px;border-radius:999px;border:none;font-weight:800;cursor:pointer;transition:transform .2s ease,background .2s ease}
-    .btn-primary{background:#8d5f4f;color:#fff9f0}
-    .btn-primary:hover{transform:translateY(-1px);background:#a06d5f}
-    .btn-disabled{opacity:.6;cursor:not-allowed}
+    .btn-row { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; margin-top: 8px; }
+    .btn-add {
+      padding: 16px 32px; background: #8d5f4f; color: white; border: none;
+      border-radius: 999px; font-size: 1rem; font-weight: 700; cursor: pointer;
+      transition: background 0.2s; font-family: inherit;
+    }
+    .btn-add:hover { background: #a06d5f; }
+    .btn-add:disabled { opacity: 0.6; cursor: not-allowed; }
+    .btn-sec {
+      padding: 14px 24px; background: rgba(141,95,79,.12); color: #5f463a;
+      border-radius: 999px; text-decoration: none; font-weight: 700; font-size: 0.9rem; transition: background 0.2s;
+    }
+    .btn-sec:hover { background: rgba(141,95,79,.2); }
 
-    .empty{padding:42px;text-align:center;background:rgba(255,255,255,.9);border-radius:34px;box-shadow:0 14px 40px rgba(109,68,42,.08)}
-    .empty h2{margin:0 0 18px;color:#593b2e}
+    /* Empty state */
+    .empty-layout {
+      grid-column: 1 / -1;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      padding: 80px; text-align: center; gap: 16px;
+    }
+    .empty-layout h2 { font-size: 2rem; color: #593b2e; }
+    .empty-layout p { color: #7a5c4f; }
+    .empty-layout a {
+      display: inline-block; text-decoration: none; color: white; background: #8d5f4f;
+      padding: 14px 28px; border-radius: 999px; font-weight: 700; margin-top: 8px;
+    }
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <header>
-      <div class="logo">Milkshake Details</div>
-      <div class="actions">
-        <a class="nav-link" href="cart.html">Warenkorb <span id="cartBadge" style="background:rgba(141,95,79,.16);padding:4px 10px;border-radius:999px;font-size:.9rem;font-weight:700;color:#5f463a"></span></a>
-        <a href="milkshake.html">Zurück zum Mixer</a>
-      </div>
-    </header>
-
-    <div id="emptyState" class="empty" style="display:none">
-      <h2>No milkshake selected yet</h2>
-      <p>Mix a milkshake first. Then this page will show its image, cost, and prize.</p>
-      <a href="milkshake.html" class="btn btn-primary" style="margin-top:8px;text-decoration:none">Go to Mixer</a>
+  <header>
+    <div class="logo">Milkshake Details</div>
+    <div class="hlinks">
+      <a href="cart.html">Warenkorb <span id="cartBadge" style="background:rgba(141,95,79,.16);padding:2px 9px;border-radius:999px;font-size:.82rem;font-weight:700;color:#5f463a;"></span></a>
+      <a href="milkshake.html">← Zurück zum Mixer</a>
     </div>
+  </header>
 
-    <div id="content" class="grid" style="display:none">
-      <div class="image"><img id="detailImg" src="" alt="Milkshake" /></div>
-      <div class="card">
-        <h1 id="detailTitle">-</h1>
-        <p id="detailDesc">-</p>
-
-        <div class="specs">
-          <div class="row"><strong>Cost</strong><span id="detailCost">€0.00</span></div>
-          <div class="row"><strong>Flavor</strong><span id="detailFlavor">-</span></div>
-        </div>
-
-        <div style="display:flex;gap:14px;flex-wrap:wrap;align-items:center;margin-top:20px">
-          <button id="addToCartButton" class="btn btn-primary">Add to cart</button>
-          <a href="cart.html" class="btn" style="background:rgba(141,95,79,.12);color:#5f463a;text-decoration:none">Go to cart</a>
-        </div>
-      </div>
-    </div>
+  <div class="layout" id="mainLayout">
+    <!-- filled by JS -->
   </div>
 
   <script src="cart-system.js"></script>
   <script>
-    const $ = (id) => document.getElementById(id);
-
-    const emptyState      = $('emptyState');
-    const content         = $('content');
-    const detailImg       = $('detailImg');
-    const detailTitle     = $('detailTitle');
-    const detailDesc      = $('detailDesc');
-    const detailCost      = $('detailCost');
-    const detailPrize     = $('detailPrize');
-    const detailFlavor    = $('detailFlavor');
-    const addToCartButton = $('addToCartButton');
-    const cartBadge       = $('cartBadge');
-
-    const updateBadge = () => window.CartSystem.updateBadge(cartBadge);
-
-    const render = () => {
-      updateBadge();
-      const milkshake = window.CartSystem.getLastMilkshake();
-      if (!milkshake) {
-        content.style.display = 'none';
-        emptyState.style.display = 'block';
-        addToCartButton.disabled = true;
-        addToCartButton.classList.add('btn-disabled');
-        return;
-      }
-
-      content.style.display = 'grid';
-      emptyState.style.display = 'none';
-
-      detailImg.src           = milkshake.actualLook || milkshake.imageUrl || 'assets/image-1779900833516.png';
-      detailTitle.textContent  = milkshake.title || '-';
-      detailDesc.textContent   = milkshake.description || '';
-      detailCost.textContent   = `€${Number(milkshake.cost || 0).toFixed(2)}`;
-      detailPrize.textContent  = `${milkshake.prizeName || '-'}${milkshake.prizeDescription ? ' — ' + milkshake.prizeDescription : ''}`;
-      detailFlavor.textContent = milkshake.title || '-';
-
-      addToCartButton.disabled = false;
-      addToCartButton.classList.remove('btn-disabled');
+    const gradients = {
+      'Erdbeer-Klassik':'linear-gradient(135deg,#ffafbd,#ffc3a0)',
+      'Doppelte Schokolade':'linear-gradient(135deg,#4b382a,#8d5f4f)',
+      'Vanilletraum':'linear-gradient(135deg,#fff3b0,#caa75b)',
+      'Pistazien-Wirbel':'linear-gradient(135deg,#b5e3a3,#7ca982)',
+      'Salzkaramell-Crunch':'linear-gradient(135deg,#e29578,#dd6e42)',
+      'Keks & Creme':'linear-gradient(135deg,#d3d3d3,#4a4a4a)',
+      'Beeren-Käsekuchen':'linear-gradient(135deg,#ffafbd,#d05090)',
+      'Bananensplit-Genuss':'linear-gradient(135deg,#fff3b0,#caa75b)',
+      'Mango-Tango':'linear-gradient(135deg,#f9d423,#ff4e50)',
+      'Minz-Schoko-Splinter':'linear-gradient(135deg,#93f5d5,#4b382a)',
     };
 
-    addToCartButton.addEventListener('click', () => {
-      const milkshake = window.CartSystem.getLastMilkshake();
-      if (!milkshake) return;
-      window.CartSystem.addMilkshake(milkshake);
-      updateBadge();
-      addToCartButton.textContent = 'Added! ✓';
-      addToCartButton.disabled = true;
-      addToCartButton.classList.add('btn-disabled');
-      setTimeout(() => {
-        addToCartButton.textContent = 'Add to cart';
-        addToCartButton.disabled = false;
-        addToCartButton.classList.remove('btn-disabled');
-      }, 1500);
-    });
+    const badge = document.getElementById('cartBadge');
+    const updateBadge = () => badge.textContent = window.CartSystem.getCart().length;
+    const layout = document.getElementById('mainLayout');
 
-    render();
+    const milkshake = window.CartSystem.getLastMilkshake();
+
+    if (!milkshake) {
+      layout.innerHTML = `<div class="empty-layout">
+        <h2>Noch kein Shake ausgewählt</h2>
+        <p>Mixe zuerst einen Milkshake. Dann erscheint er hier.</p>
+        <a href="milkshake.html">Zum Mixer</a>
+      </div>`;
+    } else {
+      const grad = gradients[milkshake.title] || 'linear-gradient(135deg,#e6d5c3,#c4a28f)';
+      layout.innerHTML = `
+        <div class="left">
+          <div class="big-swatch" style="background:${grad}"></div>
+        </div>
+        <div class="right">
+          <h1>${milkshake.title || '—'}</h1>
+          <p>${milkshake.description || ''}</p>
+          <div class="price">€${Number(milkshake.cost||0).toFixed(2)}</div>
+          <div class="btn-row">
+            <button class="btn-add" id="addBtn">In den Warenkorb</button>
+            <a class="btn-sec" href="cart.html">Zum Warenkorb</a>
+          </div>
+        </div>`;
+
+      document.getElementById('addBtn').addEventListener('click', function() {
+        window.CartSystem.addMilkshake(milkshake);
+        updateBadge();
+        this.textContent = 'Hinzugefügt ✓'; this.disabled = true;
+        setTimeout(() => { this.textContent = 'In den Warenkorb'; this.disabled = false; }, 1500);
+      });
+    }
+
+    updateBadge();
   </script>
 </body>
 </html>
-

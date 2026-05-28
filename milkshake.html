@@ -1,470 +1,239 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Milkshake Mixer</title>
-    <style>
-        :root {
-            background: #fdf7ef;
-            color: #412a1f;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        * {
-            box-sizing: border-box;
-        }
-        body {
-            margin: 0;
-            min-height: 100vh;
-            background: radial-gradient(circle at top right, #fff8f1 0%, #f4e3d1 40%, #fdf7ef 100%);
-            color: #412a1f;
-        }
-        body, button {
-            font-family: inherit;
-        }
-        .page-wrap {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 32px 4vw 48px;
-        }
-        header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 16px;
-            margin-bottom: 32px;
-        }
-        .logo {
-            font-size: 0.95rem;
-            letter-spacing: 0.18em;
-            text-transform: uppercase;
-            color: #7a5c4f;
-        }
-        .back-link,
-        .cart-link {
-            text-decoration: none;
-            color: #8d5f4f;
-            font-weight: 700;
-            padding: 10px 16px;
-            background: rgba(141,95,79,0.12);
-            border-radius: 999px;
-            transition: transform 0.2s ease, background 0.2s ease;
-        }
-        .back-link:hover,
-        .back-link:focus-visible,
-        .cart-link:hover,
-        .cart-link:focus-visible {
-            transform: translateY(-1px);
-            background: rgba(141,95,79,0.2);
-        }
-        .page-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 16px;
-        }
-        .page-actions {
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-        }
-        .action-row {
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-            align-items: center;
-        }
-        .secondary-button,
-        .secondary-link {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 16px 22px;
-            border-radius: 999px;
-            border: 1px solid rgba(141,95,79,0.18);
-            color: #5f463a;
-            background: rgba(255,255,255,0.92);
-            text-decoration: none;
-            cursor: pointer;
-            transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
-        }
-        .secondary-button:hover,
-        .secondary-link:hover,
-        .secondary-button:focus-visible,
-        .secondary-link:focus-visible {
-            transform: translateY(-1px);
-            background: rgba(255,255,255,1);
-            border-color: rgba(141,95,79,0.28);
-        }
-        .secondary-button:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-        }
-        .cart-badge {
-            background: rgba(141,95,79,0.16);
-            padding: 4px 10px;
-            border-radius: 999px;
-            color: #5f463a;
-            font-size: 0.95rem;
-            font-weight: 700;
-        }
-        .hero {
-            display: grid;
-            gap: 28px;
-            padding: 32px;
-            background: rgba(255,255,255,0.95);
-            border-radius: 36px;
-            box-shadow: 0 18px 40px rgba(109,68,42,0.12);
-        }
-        .hero h1 {
-            margin: 0;
-            font-size: clamp(2.4rem, 4vw, 4rem);
-            color: #3d2920;
-            line-height: 1.02;
-        }
-        .hero p {
-            margin: 0;
-            max-width: 720px;
-            font-size: 1.05rem;
-            line-height: 1.8;
-            color: #5f463a;
-        }
-        .mixer-card {
-            display: grid;
-            gap: 24px;
-            padding: 28px;
-            border-radius: 30px;
-            background: #fffaf3;
-            border: 1px solid rgba(196, 162, 143, 0.4);
-        }
-        .mixer-card .result {
-            display: grid;
-            gap: 24px;
-            padding: 24px;
-            background: #fff7f0;
-            border-radius: 30px;
-            border: 1px solid rgba(141,95,79,0.16);
-            box-shadow: inset 0 0 0 1px rgba(255,255,255,0.55);
-        }
-        .result-row {
-            display: grid;
-            grid-template-columns: minmax(180px, 280px) 1fr;
-            gap: 24px;
-            align-items: start;
-        }
-        .shake-preview {
-            display: grid;
-            place-items: center;
-            padding: 18px;
-            border-radius: 26px;
-            background: rgba(255, 255, 255, 0.88);
-            box-shadow: 0 18px 36px rgba(109, 68, 42, 0.12);
-            transform-origin: center;
-        }
-        .shake-preview.shaking {
-            animation: shakeReveal 0.9s ease-in-out;
-        }
-        .shake-photo {
-            width: 100%;
-            max-width: 240px;
-            aspect-ratio: 4 / 5;
-            border-radius: 28px;
-            overflow: hidden;
-            background: #f9f1ea;
-            display: grid;
-            place-items: center;
-        }
-        .shake-photo img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            object-position: center;
-            display: block;
-        }
-        .preview-label {
-            margin: 14px 0 0;
-            color: #7a5c4f;
-            font-size: 0.95rem;
-            text-align: center;
-        }
-        .result-text h2 {
-            margin: 0 0 12px;
-            font-size: 1.7rem;
-            color: #593b2e;
-        }
-        .result-text p {
-            margin: 0 0 20px;
-            color: #6e4f43;
-            line-height: 1.8;
-        }
-        .result-details {
-            display: grid;
-            gap: 10px;
-            font-size: 1rem;
-            color: #5f463a;
-        }
-        .result-details strong {
-            color: #3d2920;
-            font-size: 1.4rem;
-        }
-        #resultCost {
-            font-size: 2rem;
-            font-weight: 800;
-            color: #8d5f4f;
-        }
-        /* „In den Warenkorb“-Button im Original-Style */
-        #addToWarenkorbButton {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transition: all 0.2s ease;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Milkshake Mixer</title>
+  <style>
+    :root { font-family: 'Segoe UI', sans-serif; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { min-height: 100vh; background: radial-gradient(circle at top right, #fff8f1, #f4e3d1 50%, #fdf7ef); color: #412a1f; }
 
-        /* Wenn ein Milkshake gemixt wurde, wird der Button GRÜN */
-        #addToWarenkorbButton:not(:disabled) {
-            opacity: 1;
-            cursor: pointer;
-            background-color: hsl(123, 62%, 47%); /* Schönes, frisches Grün */
-            color: #ffffff;
-            border-color: hsl(123, 62%, 47%);
-        }
+    header {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 20px 48px; border-bottom: 1px solid rgba(141,95,79,.12);
+      background: rgba(253,247,239,.9); backdrop-filter: blur(8px);
+      position: sticky; top: 0; z-index: 10;
+    }
+    .logo { font-size: 0.85rem; letter-spacing: 0.18em; text-transform: uppercase; color: #7a5c4f; }
+    .hlinks { display: flex; gap: 10px; }
+    .hlinks a { text-decoration: none; color: #8d5f4f; font-weight: 700; padding: 9px 18px; background: rgba(141,95,79,.12); border-radius: 999px; transition: background 0.2s; font-size: 0.9rem; }
+    .hlinks a:hover { background: rgba(141,95,79,.22); }
 
-        /* Hover-Effekt für das Grün */
-        #addToWarenkorbButton:not(:disabled):hover {
-            background-color: #88c714; /* Etwas dunkleres Grün */
-            border-color: #88c714;
-            transform: translateY(-1px);
-        }
-        
-        .prize-badge {
-            margin-top: 18px;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            padding: 10px 16px;
-            border-radius: 999px;
-            background: rgba(141,95,79,0.12);
-            color: #593b2e;
-            font-weight: 700;
-        }
-        @keyframes shakeReveal {
-            0% { transform: translateX(0) rotate(0deg); }
-            25% { transform: translateX(-6px) rotate(-2deg); }
-            50% { transform: translateX(6px) rotate(2deg); }
-            75% { transform: translateX(-4px) rotate(-1deg); }
-            100% { transform: translateX(0) rotate(0deg); }
-        }
-        .mix-button {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
-            max-width: 260px;
-            padding: 18px 24px;
-            margin-top: 8px;
-            border: none;
-            border-radius: 999px;
-            background: #8d5f4f;
-            color: #fff9f0;
-            font-size: 1rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
-        }
-        .mix-button:hover,
-        .mix-button:focus-visible {
-            transform: translateY(-1px);
-            background: #a06d5f;
-            box-shadow: 0 16px 30px rgba(141,95,79,0.22);
-        }
-        .note {
-            color: #7a5c4f;
-            font-size: 0.96rem;
-        }
-        footer {
-            margin-top: 28px;
-            color: #8a6a59;
-            font-size: 0.95rem;
-        }
-    </style>
+    /* Full-width two-column layout */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: calc(100vh - 65px);
+    }
+
+    /* Left: big shake display */
+    .left {
+      display: flex; flex-direction: column; justify-content: center; align-items: center;
+      padding: 48px;
+      background: rgba(255,255,255,.55);
+      border-right: 1px solid rgba(196,162,143,.25);
+      gap: 24px;
+    }
+    .shake-swatch {
+      width: 280px; height: 360px; border-radius: 36px;
+      background: linear-gradient(135deg, #e6d5c3, #c4a28f);
+      box-shadow: 0 32px 80px rgba(109,68,42,.18);
+      transition: background 0.6s ease;
+    }
+    .shake-swatch.shaking { animation: wiggle 0.7s ease; }
+    @keyframes wiggle { 20% { transform: rotate(-4deg) scale(1.02); } 50% { transform: rotate(4deg) scale(1.03); } 80% { transform: rotate(-2deg) scale(1.01); } 100% { transform: rotate(0) scale(1); } }
+    .swatch-label { font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase; color: #9a7060; }
+
+    /* Right: controls */
+    .right {
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 56px 64px;
+      gap: 28px;
+    }
+    .right h1 { font-size: clamp(2rem, 2.8vw, 3.2rem); color: #3d2920; line-height: 1.1; }
+    .right > p { color: #6b4d42; line-height: 1.7; font-size: 1rem; }
+
+    .result-box {
+      background: rgba(255,255,255,.85); border-radius: 24px;
+      border: 1px solid rgba(141,95,79,.16); padding: 24px;
+    }
+    .result-name { font-size: 1.6rem; font-weight: 700; color: #3d2920; margin-bottom: 8px; }
+    .result-desc { color: #6e4f43; line-height: 1.7; font-size: 0.95rem; margin-bottom: 16px; }
+    .result-price { font-size: 2.4rem; font-weight: 800; color: #8d5f4f; }
+
+    .btn-row { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+    .btn-mix {
+      padding: 16px 32px; background: #8d5f4f; color: white; border: none;
+      border-radius: 999px; font-size: 1rem; font-weight: 700; cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .btn-mix:hover { background: #a06d5f; transform: translateY(-2px); }
+    .btn-mix:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+    .btn-sec {
+      padding: 14px 22px; background: rgba(141,95,79,.12); color: #5f463a;
+      border: none; border-radius: 999px; cursor: pointer; font-weight: 700;
+      transition: background 0.2s; text-decoration: none; display: inline-flex;
+      align-items: center; font-size: 0.9rem; font-family: inherit;
+    }
+    .btn-sec:hover { background: rgba(141,95,79,.2); }
+    .btn-sec:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    .tip-strip {
+      padding: 18px 22px; background: rgba(245,237,228,.8);
+      border-radius: 18px; border-left: 3px solid #c4a28f;
+    }
+    .tip-strip p { margin: 0; font-size: 0.9rem; color: #5f463a; font-style: italic; line-height: 1.6; transition: opacity 0.35s; }
+    .tip-strip .tip-src { margin: 6px 0 0; font-size: 0.8rem; color: #9a7060; font-style: normal; transition: opacity 0.35s; }
+
+    footer { padding: 20px 48px; color: #8a6a59; font-size: 0.85rem; border-top: 1px solid rgba(141,95,79,.1); }
+  </style>
 </head>
 <body>
-    <div class="page-wrap">
-        <header class="page-header">
-            <div class="logo">Milkshake Mixer</div>
-            <div class="page-actions">
-                <a class="cart-link" href="cart.html">Warenkorb <span class="cart-badge" id="cartCount">0</span></a>
-                <a class="back-link" href="index.html">Zurück zum Dream-Menü</a>
-            </div>
-        </header>
 
-        <section class="hero">
-            <div>
-                <h1>Mixe deinen perfekten Drink</h1>
-                <p>Drücke auf den Button und unser Milkshake-Generator kombiniert Geschmacksrichtungen, Milchsorten und Toppings zu deinem perfekten cremigen Genuss.</p>
-            </div>
-
-            <div class="mixer-card">
-                <div class="result" id="resultBox">
-                    <div class="result-row">
-                        <div class="shake-preview" id="shakePreview">
-                            <div class="shake-photo" id="shakePhoto">
-                                <img src="assets/image-1779900833516.png" alt="Milkshake preview">
-                            </div>
-                            <div class="preview-label">Dein Milkshake als Farbe</div>
-                        </div>
-                        <div class="result-text">
-                            <h2 id="resultTitle">Dein Milkshake erscheint hier</h2>
-                            <p id="resultText">Klicke auf den Button, um eine traumhafte Milkshake-Kombination zu erstellen.</p>
-                            <div class="result-details">
-                                <div><strong>Preis:</strong> <span id="resultCost">-</span></div>
-                                
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <button class="mix-button" id="mixButton">Milkshake mixen</button>
-                <div class="action-row">
-                    <button class="secondary-button" id="addToWarenkorbButton" disabled>In den Warenkorb</button>
-                    <a class="secondary-link" id="detailsLink" href="milkshake-details.html">Details ansehen</a>
-                </div>
-            </div>
-        </section>
-
-        <footer>Genieße das cremigste Milkshake-Erlebnis im Web.</footer>
+  <header>
+    <div class="logo">Milkshake Mixer</div>
+    <div class="hlinks">
+      <a href="cart.html">Warenkorb <span id="cartCount" style="background:rgba(141,95,79,.16);padding:2px 9px;border-radius:999px;font-size:.82rem;">0</span></a>
+      <a href="index.html">← Startseite</a>
     </div>
-    <script src="cart-system.js"></script>
+  </header>
+
+  <div class="layout">
+    <div class="left">
+      <div class="shake-swatch" id="shakeColor"></div>
+      <div class="swatch-label" id="swatchLabel">Noch kein Shake gemixt</div>
+    </div>
+
+    <div class="right">
+      <div>
+        <h1>Mixe deinen Shake</h1>
+        <p style="margin-top:10px;">Drücke den Button. Der Generator entscheidet. Du hast keine Wahl.</p>
+      </div>
+
+      <div class="result-box">
+        <div class="result-name" id="resultTitle">Dein Shake erscheint hier</div>
+        <div class="result-desc" id="resultText">Klicke auf „Milkshake mixen" und schau was passiert.</div>
+        <div class="result-price" id="resultCost">—</div>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn-mix" id="mixBtn">Milkshake mixen</button>
+        <button class="btn-sec" id="cartBtn" disabled>In den Warenkorb</button>
+        <a class="btn-sec" href="milkshake-details.html">Details ansehen</a>
+      </div>
+
+      <div class="tip-strip">
+        <p id="tipText">"Diese Milchshakes sind so sahnig — fast so sahnig wie meine eigene Creme."</p>
+        <p class="tip-src" id="tipSrc">— Alexander, Stammgast und ohne jede Ahnung</p>
+      </div>
+    </div>
+  </div>
+
+  <footer>Genieße das cremigste Milkshake-Erlebnis im Web. Oder zumindest das zweitcremigste.</footer>
+
+  <script src="cart-system.js"></script>
   <script>
-        const flavors = [
-            'Erdbeer-Klassik', 'Doppelte Schokolade', 'Vanilletraum',
-            'Pistazien-Wirbel', 'Salzkaramell-Crunch', 'Bananensplit-Genuss',
-            'Keks & Creme', 'Beeren-Käsekuchen', 'Mango-Tango', 'Minz-Schoko-Splinter'
-        ];
-        const bases = ['Vollmilch', 'Mandelmilch', 'Hafermilch', 'Sojamilch', 'Kokosmilch', 'Haselnussmilch'];
-        const toppings = [
-            'Sahne und Streusel', 'Karamellsauce', 'Dunkle Schokoraspeln',
-            'Gehackte Nüsse', 'Frische Beeren', 'Keksstückchen', 'Marshmallows',
-            'Zimt', 'Schokosirup', 'Toffee-Stückchen'
-        ];
+    const tips = [
+      { text: '"Diese Milchshakes sind so sahnig — fast so sahnig wie meine eigene Creme."', src: '— Alexander, Stammgast und ohne jede Ahnung' },
+      { text: '"Ich wollte nur einen probieren. Ich bin seit Dienstag nicht mehr nach Hause gegangen."', src: '— Markus, vermisst seit 14:30 Uhr' },
+      { text: '"Mein Arzt sagt ich soll aufhören. Mein Arzt hat aber noch keinen Pistazien-Wirbel probiert."', src: '— Thomas, sucht derzeit einen neuen Arzt' },
+      { text: '"Der Bananensplit hat mein Leben verändert. Zum Schlechten, aber immerhin verändert."', src: '— Jana, war eigentlich auf Diät' },
+      { text: '"Ich habe den grünen Button gedrückt. Nichts hat sich verändert. Ich mache es trotzdem jeden Tag."', src: '— Anonym (möchte es so lassen)' },
+      { text: '"Ehrlich gesagt ist mir die Sorte egal. Hauptsache Sahne oben drauf."', src: '— Alexander nochmal, immer noch ohne Ahnung' },
+    ];
+    let tipIdx = 0;
+    const tipText = document.getElementById('tipText');
+    const tipSrc  = document.getElementById('tipSrc');
+    setInterval(() => {
+      tipText.style.opacity = 0; tipSrc.style.opacity = 0;
+      setTimeout(() => {
+        tipIdx = (tipIdx + 1) % tips.length;
+        tipText.textContent = tips[tipIdx].text;
+        tipSrc.textContent  = tips[tipIdx].src;
+        tipText.style.opacity = 1; tipSrc.style.opacity = 1;
+      }, 350);
+    }, 4500);
 
-        function getGradientForFlavor(flavor) {
-            switch (flavor) {
-                case 'Erdbeer-Klassik':
-                case 'Beeren-Käsekuchen':
-                    return 'linear-gradient(135deg, #ffafbd 0%, #ffc3a0 100%)';
-                case 'Doppelte Schokolade':
-                    return 'linear-gradient(135deg, #4b382a 0%, #8d5f4f 100%)';
-                case 'Vanilletraum':
-                case 'Bananensplit-Genuss':
-                    return 'linear-gradient(135deg, #fff3b0 0%, #caa75b 100%)';
-                case 'Pistazien-Wirbel':
-                    return 'linear-gradient(135deg, #b5e3a3 0%, #7ca982 100%)';
-                case 'Salzkaramell-Crunch':
-                    return 'linear-gradient(135deg, #e29578 0%, #dd6e42 100%)';
-                case 'Keks & Creme':
-                    return 'linear-gradient(135deg, #d3d3d3 0%, #4a4a4a 100%)';
-                case 'Mango-Tango':
-                    return 'linear-gradient(135deg, #f9d423 0%, #ff4e50 100%)';
-                case 'Minz-Schoko-Splinter':
-                    return 'linear-gradient(135deg, #93f5d5 0%, #4b382a 100%)';
-                default:
-                    return 'linear-gradient(135deg, #e6d5c3 0%, #c4a28f 100%)';
-            }
-        }
+    const flavors  = ['Erdbeer-Klassik','Doppelte Schokolade','Vanilletraum','Pistazien-Wirbel','Salzkaramell-Crunch','Bananensplit-Genuss','Keks & Creme','Beeren-Käsekuchen','Mango-Tango','Minz-Schoko-Splinter'];
+    const bases    = ['Vollmilch','Mandelmilch','Hafermilch','Sojamilch','Kokosmilch','Haselnussmilch'];
+    const toppings = ['Sahne und Streusel','Karamellsauce','Dunkle Schokoraspeln','Gehackte Nüsse','Frische Beeren','Keksstückchen','Marshmallows','Zimt','Schokosirup','Toffee-Stückchen'];
+    const gradients = {
+      'Erdbeer-Klassik':'linear-gradient(135deg,#ffafbd,#ffc3a0)',
+      'Doppelte Schokolade':'linear-gradient(135deg,#4b382a,#8d5f4f)',
+      'Vanilletraum':'linear-gradient(135deg,#fff3b0,#caa75b)',
+      'Pistazien-Wirbel':'linear-gradient(135deg,#b5e3a3,#7ca982)',
+      'Salzkaramell-Crunch':'linear-gradient(135deg,#e29578,#dd6e42)',
+      'Keks & Creme':'linear-gradient(135deg,#d3d3d3,#4a4a4a)',
+      'Beeren-Käsekuchen':'linear-gradient(135deg,#ffafbd,#d05090)',
+      'Bananensplit-Genuss':'linear-gradient(135deg,#fff3b0,#caa75b)',
+      'Mango-Tango':'linear-gradient(135deg,#f9d423,#ff4e50)',
+      'Minz-Schoko-Splinter':'linear-gradient(135deg,#93f5d5,#4b382a)',
+    };
+    const prices = {'Erdbeer-Klassik':4.99,'Doppelte Schokolade':5.49,'Vanilletraum':5.19,'Pistazien-Wirbel':5.79,'Salzkaramell-Crunch':5.89,'Bananensplit-Genuss':5.29,'Keks & Creme':5.59,'Beeren-Käsekuchen':5.69,'Mango-Tango':5.39,'Minz-Schoko-Splinter':5.49};
 
-        const mixButton             = document.getElementById('mixButton');
-        const addToWarenkorbButton  = document.getElementById('addToWarenkorbButton');
-        const detailsLink           = document.getElementById('detailsLink');
-        const cartCount             = document.getElementById('cartCount');
-        const resultTitle           = document.getElementById('resultTitle');
-        const resultText            = document.getElementById('resultText');
-        const resultCost            = document.getElementById('resultCost');
-        const shakePhoto            = document.getElementById('shakePhoto');
-        const shakePreview          = document.getElementById('shakePreview');
+    const MIX_LIMIT = 5, MIX_DELAY = 2000;
+    let mixCount = Number(localStorage.getItem('mixCount') || 0);
+    const exhaustedMsgs = ['Der Mixer braucht eine Pause. Und du auch.','Limit erreicht. Der Mixer streikt.','Zu viele Shakes. Der Generator liegt flach.','Bitte morgen wiederkommen. Oder nie. Beides ok.','Der Mixer hat gekündigt.'];
 
-        function randomItem(arr) {
-            return arr[Math.floor(Math.random() * arr.length)];
-        }
+    const mixBtn = document.getElementById('mixBtn');
+    const cartBtn = document.getElementById('cartBtn');
+    const shakeColor = document.getElementById('shakeColor');
+    const swatchLabel = document.getElementById('swatchLabel');
 
-        function updateWarenkorbBadge() {
-            // Greift jetzt korrekt auf CartSystem zu
-            if (window.CartSystem) {
-                const cart = window.CartSystem.getCart();
-                if (cartCount) cartCount.textContent = cart.length;
-            }
-        }
+    function rand(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+    function updateBadge() { if (window.CartSystem) document.getElementById('cartCount').textContent = window.CartSystem.getCart().length; }
+    function updateMixBtn() {
+      if (mixCount >= MIX_LIMIT) { mixBtn.disabled = true; mixBtn.textContent = exhaustedMsgs[mixCount % exhaustedMsgs.length]; }
+    }
 
-        function addToWarenkorb() {
-            if (!window.CartSystem) return;
-            const last = window.CartSystem.getLastMilkshake();
-            if (!last) return;
-            window.CartSystem.addMilkshake(last);
-            updateWarenkorbBadge();
-            addToWarenkorbButton.textContent = 'Hinzugefügt ✓';
-            setTimeout(() => (addToWarenkorbButton.textContent = 'In den Warenkorb'), 1400);
-        }
+    const mixingTexts = ['Wird gemixt…','Zutaten suchen…','Milch einschütten…','Fast fertig…'];
+    async function mix() {
+      if (mixCount >= MIX_LIMIT) return;
+      mixBtn.disabled = true;
+      let ti = 0; mixBtn.textContent = mixingTexts[0];
+      const t = setInterval(() => { ti = (ti+1) % mixingTexts.length; mixBtn.textContent = mixingTexts[ti]; }, 500);
+      await new Promise(r => setTimeout(r, MIX_DELAY));
+      clearInterval(t);
+      let data;
+      try {
+        const r = await fetch('/api/milkshake'); if (!r.ok) throw 0; data = await r.json();
+      } catch {
+        const f = rand(flavors), b = rand(bases), tp = rand(toppings);
+        data = { title: f, description: `Ein cremiger Milkshake mit ${b}, verfeinert mit ${tp}.`, cost: (prices[f]||5.25).toFixed(2) };
+      }
+      show(data); window.CartSystem?.setLastMilkshake(data);
+      mixCount++; localStorage.setItem('mixCount', mixCount);
+      const rem = MIX_LIMIT - mixCount;
+      if (rem <= 0) { updateMixBtn(); } else {
+        mixBtn.disabled = false;
+        mixBtn.textContent = rem === 1 ? 'Milkshake mixen (letzter!)' : `Milkshake mixen (noch ${rem}×)`;
+      }
+    }
 
-        async function createMilkshake() {
-            mixButton.disabled = true;
-            mixButton.textContent = 'Wird gemixt…';
-            let data;
-            
-            try {
-                const res = await fetch('/api/milkshake');
-                if (!res.ok) throw new Error('API Error');
-                data = await res.json();
-            } catch {
-                data = createLocalMilkshake();
-            }
+    function show(data) {
+      document.getElementById('resultTitle').textContent = data.title;
+      document.getElementById('resultText').textContent  = data.description;
+      document.getElementById('resultCost').textContent  = `€${Number(data.cost).toFixed(2)}`;
+      shakeColor.style.background = gradients[data.title] || 'linear-gradient(135deg,#e6d5c3,#c4a28f)';
+      swatchLabel.textContent = data.title;
+      shakeColor.classList.remove('shaking'); void shakeColor.offsetWidth; shakeColor.classList.add('shaking');
+      cartBtn.disabled = false;
+    }
 
-            try {
-                showMilkshake(data);
-                if (window.CartSystem) {
-                    // Speichert es so ab, dass details.html und cart.html es lesen können
-                    localStorage.setItem(window.CartSystem.KEY_LAST, JSON.stringify(data));
-                }
-                addToWarenkorbButton.disabled = false;
-            } catch (err) {
-                console.error("Fehler beim Anzeigen oder Speichern:", err);
-            } finally {
-                mixButton.disabled = false;
-                mixButton.textContent = 'Milkshake mixen';
-            }
-        }
+    mixBtn.addEventListener('click', mix);
+    cartBtn.addEventListener('click', () => {
+      const last = window.CartSystem?.getLastMilkshake(); if (!last) return;
+      window.CartSystem.addMilkshake(last); updateBadge();
+      cartBtn.textContent = 'Hinzugefügt ✓';
+      setTimeout(() => cartBtn.textContent = 'In den Warenkorb', 1400);
+    });
 
-        function createLocalMilkshake() {
-            const flavor  = randomItem(flavors);
-            const base    = randomItem(bases);
-            const topping = randomItem(toppings);
-            return {
-                title: flavor,
-                description: `Ein cremiger Milkshake mit ${base}, verfeinert mit ${topping}.`,
-                cost: (Math.random() * 3 + 4.5).toFixed(2)
-            };
-        }
-
-        function showMilkshake(data) {
-            resultTitle.textContent  = data.title;
-            resultText.textContent   = data.description;
-            resultCost.textContent   = `€${Number(data.cost).toFixed(2)}`;
-            
-            const gradient = getGradientForFlavor(data.title);
-            shakePhoto.innerHTML     = `<div style="width: 100%; height: 100%; background: ${gradient};"></div>`;
-            
-            shakePreview.classList.remove('shaking');
-            void shakePreview.offsetWidth;
-            shakePreview.classList.add('shaking');
-            addToWarenkorbButton.disabled = false;
-        }
-
-        mixButton.addEventListener('click', createMilkshake);
-        addToWarenkorbButton.addEventListener('click', addToWarenkorb);
-
-        // Initialisierung beim Laden der Seite
-        updateWarenkorbBadge();
-        if (window.CartSystem) {
-            const _last = window.CartSystem.getLastMilkshake();
-            if (_last) showMilkshake(_last);
-        }
-    </script>
+    updateBadge(); updateMixBtn();
+    const rem0 = MIX_LIMIT - mixCount;
+    if (mixCount > 0 && mixCount < MIX_LIMIT) mixBtn.textContent = rem0 === 1 ? 'Milkshake mixen (letzter!)' : `Milkshake mixen (noch ${rem0}×)`;
+    const _last = window.CartSystem?.getLastMilkshake();
+    if (_last) show(_last);
+  </script>
 </body>
 </html>
