@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DENT`X Praxis Dr. Potenz – Zahnarzt in Wetzlar | Werther Str. 12</title>
+    <meta name="description" content="DENT`X Praxis Dr. Potenz in Wetzlar – Moderne Zahnmedizin für Kassen- und Privatpatienten. Werther Str. 12, 35578 Wetzlar. Tel: 06441 3086778.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+    tailwind.config = {
+        theme: {
+            extend: {
+                fontFamily: {
+                    'sans': ['Geist', 'sans-serif'],
+                    'display': ['Manrope', 'sans-serif'],
+                },
+                colors: {
+                    'brand': { DEFAULT: '#c1ff72', dark: '#a8e060', light: '#d9ff9e' }
+                }
+            }
+        }
+    }
+    </script>
+    <style>
+        @keyframes fadeUp { 0%{opacity:0;transform:translateY(30px)} 100%{opacity:1;transform:translateY(0)} }
+        @keyframes clipIn { 0%{opacity:0;clip-path:inset(0 0 100% 0)} 100%{opacity:1;clip-path:inset(0 0 0 0)} }
+        @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+        @keyframes progressFill { 0%{width:0%} 100%{width:100%} }
+        .anim-fade-up{animation:fadeUp .8s ease-out both}
+        .anim-clip-in{animation:clipIn 1.2s cubic-bezier(.25,1,.5,1) both}
+        .anim-float{animation:float 6s ease-in-out infinite}
+        .delay-100{animation-delay:.1s}.delay-200{animation-delay:.2s}.delay-300{animation-delay:.3s}.delay-400{animation-delay:.4s}.delay-500{animation-delay:.5s}
+        .observe-fade{opacity:0;transform:translateY(30px);transition:opacity .8s ease-out,transform .8s ease-out}
+        .observe-fade.visible{opacity:1;transform:translateY(0)}
+        .glass-panel{background:rgba(255,255,255,.7);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.5)}
+        .grid-lines{background-size:40px 40px;background-image:linear-gradient(to right,rgba(0,0,0,.03) 1px,transparent 1px),linear-gradient(to bottom,rgba(0,0,0,.03) 1px,transparent 1px)}
+        .philosophy-line{opacity:0;transform:translateY(15px);transition:opacity .6s ease,transform .6s ease}
+        .philosophy-line.visible{opacity:1;transform:translateY(0)}
+        .service-card{transition:all .3s ease}
+        .service-card:hover{transform:scale(1.02);box-shadow:0 20px 25px -5px rgb(0 0 0/.1),0 8px 10px -6px rgb(0 0 0/.1)}
+        .team-avatar-img{object-fit:cover;object-position:center 15%}
+        .hours-row{display:flex;justify-content:space-between;padding:6px 0}
+        .hours-row:not(:last-child){border-bottom:1px solid rgba(0,0,0,.05)}
+        .flipbook-container{position:relative;overflow:hidden;border-radius:24px}
+        .flipbook-track{display:flex;transition:transform .65s cubic-bezier(.25,1,.5,1);will-change:transform}
+        .flipbook-slide{min-width:100%}
+        .flipbook-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.2);transition:all .4s ease;cursor:pointer;border:none;padding:0}
+        .flipbook-dot.active{background:#c1ff72;width:28px;border-radius:4px}
+        .flipbook-arrow{width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .3s ease}
+        .flipbook-arrow:hover{background:rgba(255,255,255,.14);border-color:rgba(193,255,114,.4);color:#c1ff72}
+        .flip-progress-bar{height:2px;background:rgba(255,255,255,.08);border-radius:1px;overflow:hidden;margin-top:20px}
+        .flip-progress-fill{height:100%;background:#c1ff72;border-radius:1px;width:0%;transition:width .3s linear}
+        .flip-progress-fill.running{animation:progressFill var(--slide-duration) linear forwards}
+        html{scroll-behavior:smooth}
+    </style>
+</head>
+<body>
+
+    <!-- NAV -->
+    <nav id="mainNav" class="fixed top-0 left-0 right-0 z-50 transition-all duration-500">
+        <div class="max-w-[1600px] mx-auto px-6 lg:px-12">
+            <div class="flex items-center justify-between h-16 lg:h-20">
+                <a href="#" class="flex items-center gap-3 group">
+                    <div class="w-9 h-9 rounded-xl bg-stone-900 flex items-center justify-center group-hover:bg-brand transition-colors duration-300">
+                        <i data-lucide="cross" class="w-4 h-4 text-brand group-hover:text-stone-900 transition-colors duration-300"></i>
+                    </div>
+                    <div class="hidden sm:block">
+                        <span class="font-display font-bold text-sm tracking-tight nav-text-color">DENT`X Dr. Potenz</span>
+                        <span class="text-xs block -mt-0.5 nav-subtext-color">Zahnarzt · Wetzlar</span>
+                    </div>
+                </a>
+                <div class="hidden lg:flex items-center gap-8">
+                    <a href="#leistungen" class="text-sm font-medium nav-link-color hover:text-stone-900 transition-colors">Leistungen</a>
+                    <a href="#ueber-uns" class="text-sm font-medium nav-link-color hover:text-stone-900 transition-colors">Über uns</a>
+                    <a href="#philosophie" class="text-sm font-medium nav-link-color hover:text-stone-900 transition-colors">Philosophie</a>
+                    <a href="#bewertungen" class="text-sm font-medium nav-link-color hover:text-stone-900 transition-colors">Bewertungen</a>
+                    <a href="#team" class="text-sm font-medium nav-link-color hover:text-stone-900 transition-colors">Team</a>
+                    <a href="#kontakt" class="text-sm font-medium nav-link-color hover:text-stone-900 transition-colors">Kontakt</a>
+                </div>
+                <div class="flex items-center gap-3">
+                    <a href="tel:+4964413086778" class="hidden md:inline-flex items-center gap-2 bg-stone-900 text-brand text-xs font-medium px-5 py-2.5 rounded-full hover:bg-stone-800 hover:scale-105 transition-all duration-300">
+                        <i data-lucide="phone" class="w-3.5 h-3.5"></i> 06441 3086778
+                    </a>
+                    <button id="mobileToggle" class="lg:hidden w-10 h-10 rounded-xl flex items-center justify-center nav-link-color hover:bg-white/20 transition-all">
+                        <i data-lucide="menu" class="w-5 h-5" id="menuIcon"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div id="mobileMenu" class="lg:hidden hidden bg-white/95 backdrop-blur-xl border-t border-neutral-200/50">
+            <div class="px-6 py-6 flex flex-col gap-4">
+                <a href="#leistungen" class="text-base font-medium text-neutral-700 hover:text-stone-900 py-2 mobile-link">Leistungen</a>
+                <a href="#ueber-uns" class="text-base font-medium text-neutral-700 hover:text-stone-900 py-2 mobile-link">Über uns</a>
+                <a href="#philosophie" class="text-base font-medium text-neutral-700 hover:text-stone-900 py-2 mobile-link">Philosophie</a>
+                <a href="#bewertungen" class="text-base font-medium text-neutral-700 hover:text-stone-900 py-2 mobile-link">Bewertungen</a>
+                <a href="#team" class="text-base font-medium text-neutral-700 hover:text-stone-900 py-2 mobile-link">Team</a>
+                <a href="#kontakt" class="text-base font-medium text-neutral-700 hover:text-stone-900 py-2 mobile-link">Kontakt</a>
+                <hr class="border-neutral-200">
+                <a href="tel:+4964413086778" class="flex items-center justify-center gap-2 bg-stone-900 text-brand text-sm font-medium px-5 py-3 rounded-full mobile-link">
+                    <i data-lucide="phone" class="w-4 h-4"></i> 06441 3086778
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="relative min-h-[75vh] lg:min-h-[85vh] flex items-center overflow-hidden grid-lines">
+        <div class="absolute top-20 right-1/4 w-72 h-72 bg-brand/15 rounded-full blur-[120px] pointer-events-none"></div>
+        <div class="absolute bottom-10 left-10 w-48 h-48 bg-brand/10 rounded-full blur-[100px] pointer-events-none"></div>
+        <div class="max-w-[1600px] mx-auto px-6 lg:px-12 w-full pt-24 lg:pt-20 pb-16">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+                <div class="lg:col-span-7 xl:col-span-6">
+                    <div class="anim-fade-up">
+                        <span class="inline-flex items-center gap-2 text-[10px] font-medium uppercase tracking-widest text-neutral-500 bg-white/80 backdrop-blur-sm px-4 py-2 rounded-full border border-neutral-200/50 mb-8">
+                            <span class="w-1.5 h-1.5 rounded-full bg-brand animate-pulse"></span>
+                            DENT`X Praxis Dr. Potenz · Wetzlar
+                        </span>
+                    </div>
+                    <h1 class="font-display font-medium text-5xl lg:text-7xl xl:text-[88px] leading-[0.95] tracking-tighter text-neutral-900 anim-clip-in delay-100">
+                        Moderne<br>Zahnmedizin<br><span class="text-stone-400">mit Ruhe.</span>
+                    </h1>
+                    <blockquote class="mt-8 lg:mt-10 anim-fade-up delay-300">
+                        <p class="text-xl lg:text-2xl font-display font-medium text-stone-700 tracking-tight leading-relaxed">
+                            „Nicht alle, die sprechen, haben etwas zu sagen.<br class="hidden lg:block">
+                            <span class="text-neutral-900">Wir schon.</span>"
+                        </p>
+                    </blockquote>
+                    <p class="mt-6 text-base lg:text-lg text-neutral-500 leading-relaxed max-w-xl anim-fade-up delay-400">
+                        Denn bei uns bedeutet jedes Wort Verantwortung – und jede Behandlung echte Hingabe. Wir hören zu, bevor wir handeln. Wir erklären, bevor wir behandeln.
+                    </p>
+                    <div class="mt-10 flex flex-wrap gap-4 anim-fade-up delay-500">
+                        <a href="tel:+4964413086778" class="inline-flex items-center gap-2.5 bg-stone-900 text-brand text-sm font-medium px-7 py-3.5 rounded-full hover:bg-stone-800 hover:scale-105 transition-all duration-300 shadow-lg shadow-stone-900/20">
+                            <i data-lucide="phone" class="w-4 h-4"></i> Termin vereinbaren
+                        </a>
+                        <a href="#leistungen" class="inline-flex items-center gap-2.5 bg-white/70 backdrop-blur-sm text-neutral-700 text-sm font-medium px-7 py-3.5 rounded-full border border-neutral-200/60 hover:bg-white hover:scale-105 transition-all duration-300">
+                            Leistungen entdecken <i data-lucide="chevron-down" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="lg:col-span-5 xl:col-span-6 flex justify-center lg:justify-end anim-fade-up delay-400">
+                    <div class="relative">
+                        <div class="w-72 h-80 lg:w-80 lg:h-[420px] xl:w-96 xl:h-[480px] rounded-[32px] overflow-hidden shadow-2xl hover:scale-[1.02] transition-transform duration-700">
+                            <img src="https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&w=800&h=1000&q=80" alt="Moderne Zahnarztpraxis" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent"></div>
+                        </div>
+                        <div class="absolute -bottom-4 -left-4 lg:-left-8 glass-panel rounded-2xl px-5 py-4 shadow-lg anim-float">
+                            <div class="flex items-center gap-3">
+                                <div class="flex gap-0.5">
+                                    <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+                                    <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+                                    <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+                                    <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+                                    <i data-lucide="star" class="w-4 h-4 text-neutral-300"></i>
+                                </div>
+                                <div>
+                                    <p class="text-sm font-semibold text-stone-900">4,6 / 5,0</p>
+                                    <p class="text-xs text-neutral-500">30 Google Bewertungen</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="absolute -top-2 -right-2 w-6 h-6 bg-brand rounded-full animate-pulse shadow-lg shadow-brand/30"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TRUST BAR – KEIN BARRIEREFREI -->
+    <section class="bg-white border-y border-neutral-200/50">
+        <div class="max-w-[1600px] mx-auto px-6 lg:px-12 py-6">
+            <div class="flex flex-wrap justify-center gap-6 lg:gap-12">
+                <div class="flex items-center gap-2.5 observe-fade"><i data-lucide="award" class="w-4 h-4 text-stone-500"></i><span class="text-sm font-medium text-neutral-600">TOP 5 bei Jameda</span></div>
+                <div class="flex items-center gap-2.5 observe-fade"><i data-lucide="shield-check" class="w-4 h-4 text-stone-500"></i><span class="text-sm font-medium text-neutral-600">Kassen- & Privatpatienten</span></div>
+                <div class="flex items-center gap-2.5 observe-fade"><i data-lucide="car" class="w-4 h-4 text-stone-500"></i><span class="text-sm font-medium text-neutral-600">Kostenlose Parkplätze</span></div>
+                <div class="flex items-center gap-2.5 observe-fade"><i data-lucide="heart" class="w-4 h-4 text-stone-500"></i><span class="text-sm font-medium text-neutral-600">LGBTQ+-freundlich</span></div>
+                <div class="flex items-center gap-2.5 observe-fade"><i data-lucide="users" class="w-4 h-4 text-stone-500"></i><span class="text-sm font-medium text-neutral-600">Neupatienten willkommen</span></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ÜBER UNS -->
+    <section id="ueber-uns" class="py-20 lg:py-32">
+        <div class="max-w-[1600px] mx-auto px-6 lg:px-12">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+                <div class="observe-fade">
+                    <div class="relative">
+                        <div class="rounded-[32px] overflow-hidden shadow-2xl">
+                            <img src="https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?auto=format&fit=crop&w=800&h=600&q=80" alt="Zahnmedizinische Instrumente" class="w-full h-[400px] lg:h-[500px] object-cover hover:scale-105 transition-transform duration-700">
+                        </div>
+                        <div class="absolute -bottom-6 -right-6 w-40 h-40 bg-brand/10 rounded-[24px] -z-10"></div>
+                        <div class="absolute -top-6 -left-6 w-24 h-24 bg-brand/5 rounded-[16px] -z-10"></div>
+                    </div>
+                </div>
+                <div class="observe-fade">
+                    <span class="inline-block text-[10px] font-medium uppercase tracking-widest text-neutral-400 mb-4">Kurzprofil</span>
+                    <h2 class="font-display font-medium text-3xl lg:text-5xl tracking-tight leading-tight text-neutral-900 mb-6">Willkommen in Ihrem<br><span class="text-stone-400">Raum des Ankommens.</span></h2>
+                    <p class="text-base lg:text-lg text-neutral-500 leading-relaxed mb-6">Die DENT`X Praxis Dr. Potenz in der Werther Straße 12 in Wetzlar verbindet moderne Zahnmedizin mit Ruhe, Klarheit und verständlicher Kommunikation.</p>
+                    <p class="text-base lg:text-lg text-neutral-500 leading-relaxed mb-8">Für jedes Alter. Für jede Behandlung. Für gesetzlich und privat Versicherte. Hier beginnt Zahnmedizin, die nicht nur behandelt, sondern versteht: funktionell, ästhetisch und ganzheitlich.</p>
+                    <div class="flex flex-wrap gap-3">
+                        <span class="inline-flex items-center gap-1.5 text-xs font-medium bg-white text-neutral-600 px-4 py-2 rounded-full border border-neutral-200/60"><i data-lucide="check" class="w-3 h-3 text-brand-dark"></i> Vorsorge</span>
+                        <span class="inline-flex items-center gap-1.5 text-xs font-medium bg-white text-neutral-600 px-4 py-2 rounded-full border border-neutral-200/60"><i data-lucide="check" class="w-3 h-3 text-brand-dark"></i> Zahnerhalt & Therapie</span>
+                        <span class="inline-flex items-center gap-1.5 text-xs font-medium bg-white text-neutral-600 px-4 py-2 rounded-full border border-neutral-200/60"><i data-lucide="check" class="w-3 h-3 text-brand-dark"></i> Ästhetische Zahnmedizin</span>
+                        <span class="inline-flex items-center gap-1.5 text-xs font-medium bg-white text-neutral-600 px-4 py-2 rounded-full border border-neutral-200/60"><i data-lucide="check" class="w-3 h-3 text-brand-dark"></i> Zahnersatz & Implantate</span>
+                        <span class="inline-flex items-center gap-1.5 text-xs font-medium bg-white text-neutral-600 px-4 py-2 rounded-full border border-neutral-200/60"><i data-lucide="check" class="w-3 h-3 text-brand-dark"></i> Kinderzahnheilkunde</span>
+                        <span class="inline-flex items-center gap-1.5 text-xs font-medium bg-white text-neutral-600 px-4 py-2 rounded-full border border-neutral-200/60"><i data-lucide="check" class="w-3 h-3 text-brand-dark"></i> Angstpatienten</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- LEISTUNGEN -->
+    <section id="leistungen" class="py-20 lg:py-32 bg-white">
+        <div class="max-w-[1600px] mx-auto px-6 lg:px-12">
+            <div class="text-center max-w-2xl mx-auto mb-16 observe-fade">
+                <span class="inline-block text-[10px] font-medium uppercase tracking-widest text-neutral-400 mb-4">Behandlungsspektrum</span>
+                <h2 class="font-display font-medium text-3xl lg:text-5xl tracking-tight text-neutral-900 mb-4">Zahnmedizin in ihrer<br><span class="text-stone-400">ruhigsten Form.</span></h2>
+                <p class="text-neutral-500 leading-relaxed">Moderne Behandlung, präzise Ausführung und echte Zuwendung – für Kassen- und Privatpatienten aller Altersgruppen.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                <div class="service-card group bg-[#f5f5f5] rounded-[24px] p-6 lg:p-8 cursor-pointer observe-fade">
+                    <div class="w-12 h-12 rounded-2xl bg-white flex items-center justify-center mb-5 shadow-sm group-hover:shadow-md group-hover:scale-110 transition-all duration-300"><i data-lucide="shield-check" class="w-5 h-5 text-stone-700"></i></div>
+                    <h3 class="font-display font-semibold text-lg tracking-tight mb-2">Prophylaxe & Zahnreinigung</h3>
+                    <p class="text-sm text-neutral-500 leading-relaxed">Professionelle Zahnreinigung und allgemeine Prophylaxe für langfristig gesunde Zähne.</p>
+                </div>
+                <div class="service-card group bg-[#f5f5f5] rounded-[24px] p-6 lg:p-8 cursor-pointer observe-fade">
+                    <div class="w-12 h-12 rounded-2xl bg-white flex items-center justify-center mb-5 shadow-sm group-hover:shadow-md group-hover:scale-110 transition-all duration-300"><i data-lucide="sparkles" class="w-5 h-5 text-stone-700"></i></div>
+                    <h3 class="font-display font-semibold text-lg tracking-tight mb-2">Ästhetische Zahnmedizin</h3>
+                    <p class="text-sm text-neutral-500 leading-relaxed">Für ein Lächeln, das sich natürlich anfühlt – von Bleaching bis zu Veneers.</p>
+                </div>
+                <div class="service-card group bg-[#f5f5f5] rounded-[24px] p-6 lg:p-8 cursor-pointer observe-fade">
+                    <div class="w-12 h-12 rounded-2xl bg-white flex items-center justify-center mb-5 shadow-sm group-hover:shadow-md group-hover:scale-110 transition-all duration-300"><i data-lucide="gem" class="w-5 h-5 text-stone-700"></i></div>
+                    <h3 class="font-display font-semibold text-lg tracking-tight mb-2">Zahnersatz & Implantate</h3>
+                    <p class="text-sm text-neutral-500 leading-relaxed">Festsitzende und herausnehmbare Versorgungen sowie Implantate.</p>
+                </div>
+                <div class="service-card group bg-[#f5f5f5] rounded-[24px] p-6 lg:p-8 cursor-pointer observe-fade">
+                    <div class="w-12 h-12 rounded-2xl bg-white flex items-center justify-center mb-5 shadow-sm group-hover:shadow-md group-hover:scale-110 transition-all duration-300"><i data-lucide="move-horizontal" class="w-5 h-5 text-stone-700"></i></div>
+                    <h3 class="font-display font-semibold text-lg tracking-tight mb-2">Aligner – Unsichtbare Zahnkorrektur</h3>
+                    <p class="text-sm text-neutral-500 leading-relaxed">Dezent, bequem und effektiv – gerade Zähne ohne sichtbare Spangen.</p>
+                </div>
+                <div class="service-card group bg-[#f5f5f5] rounded-[24px] p-6 lg:p-8 cursor-pointer observe-fade">
+                    <div class="w-12 h-12 rounded-2xl bg-white flex items-center justify-center mb-5 shadow-sm group-hover:shadow-md group-hover:scale-110 transition-all duration-300"><i data-lucide="baby" class="w-5 h-5 text-stone-700"></i></div>
+                    <h3 class="font-display font-semibold text-lg tracking-tight mb-2">Kinderzahnheilkunde</h3>
+                    <p class="text-sm text-neutral-500 leading-relaxed">Mit Geduld und Einfühlungsvermögen für einen positiven Start.</p>
+                </div>
+                <div class="service-card group bg-[#f5f5f5] rounded-[24px] p-6 lg:p-8 cursor-pointer observe-fade">
+                    <div class="w-12 h-12 rounded-2xl bg-white flex items-center justify-center mb-5 shadow-sm group-hover:shadow-md group-hover:scale-110 transition-all duration-300"><i data-lucide="brain" class="w-5 h-5 text-stone-700"></i></div>
+                    <h3 class="font-display font-semibold text-lg tracking-tight mb-2">CMD & Schienentherapie</h3>
+                    <p class="text-sm text-neutral-500 leading-relaxed">Diagnostik und Behandlung von Kiefergelenkserkrankungen.</p>
+                </div>
+                <div class="service-card group bg-[#f5f5f5] rounded-[24px] p-6 lg:p-8 cursor-pointer observe-fade">
+                    <div class="w-12 h-12 rounded-2xl bg-white flex items-center justify-center mb-5 shadow-sm group-hover:shadow-md group-hover:scale-110 transition-all duration-300"><i data-lucide="activity" class="w-5 h-5 text-stone-700"></i></div>
+                    <h3 class="font-display font-semibold text-lg tracking-tight mb-2">Endodontie (Wurzelbehandlung)</h3>
+                    <p class="text-sm text-neutral-500 leading-relaxed">Schonende Wurzelkanalbehandlung auf höchstem Niveau.</p>
+                </div>
+                <div class="service-card group bg-[#f5f5f5] rounded-[24px] p-6 lg:p-8 cursor-pointer observe-fade">
+                    <div class="w-12 h-12 rounded-2xl bg-white flex items-center justify-center mb-5 shadow-sm group-hover:shadow-md group-hover:scale-110 transition-all duration-300"><i data-lucide="scan" class="w-5 h-5 text-stone-700"></i></div>
+                    <h3 class="font-display font-semibold text-lg tracking-tight mb-2">Parodontologie</h3>
+                    <p class="text-sm text-neutral-500 leading-relaxed">Behandlung von Zahnfleischerkrankungen für ein gesundes Fundament.</p>
+                </div>
+                <div class="service-card group md:col-span-2 lg:col-span-4 bg-stone-900 rounded-[24px] p-8 lg:p-10 cursor-pointer observe-fade relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-64 h-64 bg-brand/10 rounded-full blur-[80px] pointer-events-none"></div>
+                    <div class="relative z-10 flex flex-col md:flex-row md:items-center gap-6">
+                        <div class="w-14 h-14 rounded-2xl bg-white/10 flex items-center justify-center shrink-0 group-hover:scale-110 transition-all duration-300"><i data-lucide="heart-handshake" class="w-6 h-6 text-brand"></i></div>
+                        <div>
+                            <h3 class="font-display font-semibold text-xl tracking-tight text-white mb-2">Behandlung von Angstpatienten</h3>
+                            <p class="text-sm text-neutral-400 leading-relaxed max-w-lg">Wir nehmen Ihre Ängste ernst. Mit Zeit, Verständnis und individuellen Lösungsweisen schaffen wir einen Rahmen, in dem Sie sich sicher fühlen können.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- WAS UNS AUSZEICHNET – KEIN BARRIEREFREI -->
+    <section class="py-20 lg:py-32">
+        <div class="max-w-[1600px] mx-auto px-6 lg:px-12">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
+                <div class="lg:col-span-5 observe-fade">
+                    <span class="inline-block text-[10px] font-medium uppercase tracking-widest text-neutral-400 mb-4">Praxis-Merkmale</span>
+                    <h2 class="font-display font-medium text-3xl lg:text-5xl tracking-tight leading-tight text-neutral-900 mb-6">Warum Patientinnen und<br><span class="text-stone-400">Patienten uns wählen.</span></h2>
+                    <p class="text-neutral-500 leading-relaxed">Es sind die kleinen Dinge, die den Unterschied machen: Ein ruhiges Wort, eine klare Erklärung, ein Termin, der pünktlich stattfindet.</p>
+                </div>
+                <div class="lg:col-span-7">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                        <div class="flex gap-4 observe-fade"><div class="w-10 h-10 rounded-xl bg-brand/15 flex items-center justify-center shrink-0 mt-0.5"><i data-lucide="message-circle" class="w-4 h-4 text-stone-700"></i></div><div><h4 class="font-display font-semibold text-sm mb-1">Ruhige Kommunikation</h4><p class="text-sm text-neutral-500">Verständliche Erklärungen ohne Fachchinesisch.</p></div></div>
+                        <div class="flex gap-4 observe-fade"><div class="w-10 h-10 rounded-xl bg-brand/15 flex items-center justify-center shrink-0 mt-0.5"><i data-lucide="monitor" class="w-4 h-4 text-stone-700"></i></div><div><h4 class="font-display font-semibold text-sm mb-1">Moderne Ausstattung</h4><p class="text-sm text-neutral-500">Sauber, hell und mit neuester Technik.</p></div></div>
+                        <div class="flex gap-4 observe-fade"><div class="w-10 h-10 rounded-xl bg-brand/15 flex items-center justify-center shrink-0 mt-0.5"><i data-lucide="clock" class="w-4 h-4 text-stone-700"></i></div><div><h4 class="font-display font-semibold text-sm mb-1">Kurze Wartezeiten</h4><p class="text-sm text-neutral-500">Wir planen bewusst – Ihre Zeit ist uns wichtig.</p></div></div>
+                        <div class="flex gap-4 observe-fade"><div class="w-10 h-10 rounded-xl bg-brand/15 flex items-center justify-center shrink-0 mt-0.5"><i data-lucide="map-pin" class="w-4 h-4 text-stone-700"></i></div><div><h4 class="font-display font-semibold text-sm mb-1">Zentrale Lage</h4><p class="text-sm text-neutral-500">Einfach erreichbar im Herzen von Wetzlar.</p></div></div>
+                        <div class="flex gap-4 observe-fade"><div class="w-10 h-10 rounded-xl bg-brand/15 flex items-center justify-center shrink-0 mt-0.5"><i data-lucide="car" class="w-4 h-4 text-stone-700"></i></div><div><h4 class="font-display font-semibold text-sm mb-1">Kostenlose Parkplätze</h4><p class="text-sm text-neutral-500">Direkt vor der Praxis.</p></div></div>
+                        <div class="flex gap-4 observe-fade"><div class="w-10 h-10 rounded-xl bg-brand/15 flex items-center justify-center shrink-0 mt-0.5"><i data-lucide="heart" class="w-4 h-4 text-stone-700"></i></div><div><h4 class="font-display font-semibold text-sm mb-1">LGBTQ+-freundlicher Safespace</h4><p class="text-sm text-neutral-500">Alle sind hier willkommen und sicher.</p></div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ERSTER TERMIN -->
+    <section class="py-20 lg:py-32 bg-white">
+        <div class="max-w-[1600px] mx-auto px-6 lg:px-12">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+                <div class="order-2 lg:order-1 observe-fade">
+                    <span class="inline-block text-[10px] font-medium uppercase tracking-widest text-neutral-400 mb-4">Ihr erster Termin</span>
+                    <h2 class="font-display font-medium text-3xl lg:text-5xl tracking-tight leading-tight text-neutral-900 mb-6">Zeit für das,<br><span class="text-stone-400">was wichtig ist.</span></h2>
+                    <p class="text-base lg:text-lg text-neutral-500 leading-relaxed mb-6">Beim ersten Termin nehmen wir uns bewusst Zeit: für Ihre Vorgeschichte, Ihre Fragen und eine gründliche Untersuchung.</p>
+                    <p class="text-base lg:text-lg text-neutral-500 leading-relaxed mb-8">Neupatienten werden aufgenommen – eine vorherige Terminvereinbarung wird empfohlen.</p>
+                    <div class="space-y-4">
+                        <div class="flex items-start gap-4"><div class="w-8 h-8 rounded-full bg-brand/20 flex items-center justify-center shrink-0 mt-0.5"><span class="text-xs font-bold text-stone-700">1</span></div><div><h4 class="font-display font-semibold text-sm mb-0.5">Gespräch & Anamnese</h4><p class="text-sm text-neutral-500">Wir hören Ihre Geschichte und verstehen Ihre Situation.</p></div></div>
+                        <div class="flex items-start gap-4"><div class="w-8 h-8 rounded-full bg-brand/20 flex items-center justify-center shrink-0 mt-0.5"><span class="text-xs font-bold text-stone-700">2</span></div><div><h4 class="font-display font-semibold text-sm mb-0.5">Gründliche Untersuchung</h4><p class="text-sm text-neutral-500">Mit moderner Technik und voller Aufmerksamkeit.</p></div></div>
+                        <div class="flex items-start gap-4"><div class="w-8 h-8 rounded-full bg-brand/20 flex items-center justify-center shrink-0 mt-0.5"><span class="text-xs font-bold text-stone-700">3</span></div><div><h4 class="font-display font-semibold text-sm mb-0.5">Transparenter Behandlungsplan</h4><p class="text-sm text-neutral-500">Klar, verständlich und ohne Druck.</p></div></div>
+                    </div>
+                </div>
+                <div class="order-1 lg:order-2 observe-fade">
+                    <div class="relative">
+                        <div class="rounded-[32px] overflow-hidden shadow-2xl">
+                            <img src="https://images.unsplash.com/photo-1606811971618-4486d14f3f99?auto=format&fit=crop&w=800&h=600&q=80" alt="Heller Behandlungsraum" class="w-full h-[350px] lg:h-[480px] object-cover hover:scale-105 transition-transform duration-700">
+                        </div>
+                        <div class="absolute -bottom-4 -left-4 w-32 h-32 bg-brand/10 rounded-[24px] -z-10"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PHILOSOPHIE -->
+    <section id="philosophie" class="py-24 lg:py-40 bg-[#0a0a0a] relative overflow-hidden">
+        <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-brand/5 rounded-full blur-[150px] pointer-events-none"></div>
+        <div class="absolute bottom-0 right-0 w-64 h-64 bg-brand/3 rounded-full blur-[120px] pointer-events-none"></div>
+        <div class="max-w-[1600px] mx-auto px-6 lg:px-12 relative z-10">
+            <div class="max-w-3xl mx-auto text-center">
+                <span class="inline-block text-[10px] font-medium uppercase tracking-widest text-neutral-500 mb-8 observe-fade">Unsere Philosophie</span>
+                <div class="space-y-6 mb-12">
+                    <p class="philosophy-line text-xl lg:text-2xl font-display font-light text-neutral-300 leading-relaxed">Viele Menschen kommen zu uns mit einer Last, die sie lange getragen haben. Schmerzen, Unsicherheiten, Scham, alte Erfahrungen.</p>
+                    <p class="philosophy-line text-xl lg:text-2xl font-display font-light text-neutral-300 leading-relaxed">Doch wenn Sie spüren, dass Sie hier nicht bewertet werden, sondern begleitet, beginnt etwas in Ihnen zu leuchten.</p>
+                </div>
+                <div class="space-y-4 mb-12 py-8">
+                    <p class="philosophy-line text-2xl lg:text-4xl font-display font-medium text-brand tracking-tight">„Ich darf hier sein."</p>
+                    <p class="philosophy-line text-2xl lg:text-4xl font-display font-medium text-brand tracking-tight">„Ich werde verstanden."</p>
+                    <p class="philosophy-line text-2xl lg:text-4xl font-display font-medium text-brand tracking-tight">„Ich bin sicher."</p>
+                </div>
+                <div class="space-y-6">
+                    <p class="philosophy-line text-xl lg:text-2xl font-display font-light text-neutral-300 leading-relaxed">Dieses Licht ist kein Zufall. Es entsteht durch Haltung. Durch die Art, wie wir sprechen. Wie wir zuhören. Wie wir berühren. Wie wir erklären.</p>
+                    <p class="philosophy-line text-xl lg:text-2xl font-display font-light text-neutral-300 leading-relaxed">Es entsteht durch Räume, die nicht einschüchtern, sondern beruhigen. Durch Abläufe, die nicht überfordern, sondern führen. Durch eine Zahnmedizin, die nicht mechanisch ist, sondern menschlich.</p>
+                </div>
+                <div class="mt-12 pt-8 border-t border-white/10 observe-fade">
+                    <p class="text-sm text-neutral-500 leading-relaxed max-w-lg mx-auto">Zahnmedizin ist für uns mehr als ein technisches Handwerk. Sie ist ein Zusammenspiel aus Licht, Präzision, Geduld und Verantwortung. Dieses Licht gehört Ihnen. Wir helfen Ihnen nur, es wiederzufinden.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- BEWERTUNGEN – FLIPBOOK MIT ECHTEN TEXTEN -->
+    <section id="bewertungen" class="py-20 lg:py-32 bg-white">
+        <div class="max-w-[1600px] mx-auto px-6 lg:px-12">
+            <div class="text-center max-w-2xl mx-auto mb-16 observe-fade">
+                <span class="inline-block text-[10px] font-medium uppercase tracking-widest text-neutral-400 mb-4">Google Bewertungen</span>
+                <h2 class="font-display font-medium text-3xl lg:text-5xl tracking-tight text-neutral-900 mb-4">Was unsere Patienten<br><span class="text-stone-400">tatsächlich schreiben.</span></h2>
+                <p class="text-neutral-500 leading-relaxed">Echte Google-Bewertungen – nicht ausgewählt, nicht bearbeitet. 4,6 von 5,0 Sternen bei 30 Bewertungen.</p>
+            </div>
+
+            <div class="max-w-2xl mx-auto observe-fade">
+                <div class="flipbook-container bg-stone-900 p-6 lg:p-10 relative" id="flipbook">
+                    <div class="absolute top-0 right-0 w-64 h-64 bg-brand/5 rounded-full blur-[80px] pointer-events-none"></div>
+                    <div class="overflow-hidden rounded-2xl">
+                        <div class="flipbook-track" id="flipbookTrack">
+
+                            <!-- Slide 1: Lidia Pfeifle -->
+                            <div class="flipbook-slide">
+                                <div class="relative z-10">
+                                    <div class="flex items-center justify-between mb-6">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-11 h-11 rounded-full bg-white/10 flex items-center justify-center"><span class="text-sm font-bold text-brand">LP</span></div>
+                                            <div>
+                                                <div class="flex items-center gap-2">
+                                                    <p class="text-sm font-semibold text-white">Lidia Pfeifle</p>
+                                                    <span class="text-[9px] font-bold uppercase tracking-wider bg-brand/20 text-brand px-2 py-0.5 rounded-full">Neu</span>
+                                                </div>
+                                                <p class="text-xs text-neutral-500">vor 3 Wochen · 5 Rezensionen</p>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-center gap-1 bg-white/10 px-3 py-1.5 rounded-full"><i data-lucide="star" class="w-3.5 h-3.5 text-amber-400 fill-amber-400"></i><span class="text-sm font-bold text-white">5,0</span></div>
+                                    </div>
+                                    <div class="flex gap-0.5 mb-5">
+                                        <i data-lucide="star" class="w-5 h-5 text-amber-400 fill-amber-400"></i>
+                                        <i data-lucide="star" class="w-5 h-5 text-amber-400 fill-amber-400"></i>
+                                        <i data-lucide="star" class="w-5 h-5 text-amber-400 fill-amber-400"></i>
+                                        <i data-lucide="star" class="w-5 h-5 text-amber-400 fill-amber-400"></i>
+                                        <i data-lucide="star" class="w-5 h-5 text-amber-400 fill-amber-400"></i>
+                                    </div>
+                                    <p class="text-base lg:text-lg text-neutral-300 leading-relaxed mb-6">„Ich bin seit Jahren die Patientin bei der Dr. Potenz und Dr. Cororeu und bin immer sehr zufrieden gewesen!!! Ich bin Angstpatientin und gehe nicht gerne zu den Ärzten! Bei Ihnen fühle ich mich gleich gut aufgehoben! Dr. Potenz und Dr. Cororeu sind sehr freundlich und arbeiten sehr kompetent! Ich habe die Krone bei Ihnen machen lassen, es hat sehr gut gepasst. Es wird viel Zeit investiert und gut aufgeklärt über verschiedene Behandlungsmöglichkeiten, was ich sehr schätze! Meine Wünsche und Bedürfnisse wurden respektiert und ernst genommen. Ich kann die Praxis mit gutem Gewissen weiterempfehlen!"</p>
+                                    <div class="flex items-center gap-2 text-neutral-500"><i data-lucide="message-square" class="w-3.5 h-3.5"></i><span class="text-xs">Google Bewertung von Lidia Pfeifle</span></div>
+                                </div>
+                            </div>
+
+                            <!-- Slide 2: Michael Volkwein -->
+                            <div class="flipbook-slide">
+                                <div class="relative z-10">
+                                    <div class="flex items-center justify-between mb-6">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-11 h-11 rounded-full bg-white/10 flex items-center justify-center"><span class="text-sm font-bold text-brand">MV</span></div>
+                                            <div>
+                                                <div class="flex items-center gap-2">
+                                                    <p class="text-sm font-semibold text-white">Michael Volkwein</p>
+                                                    <span class="text-[9px] font-bold uppercase tracking-wider bg-brand/20 text-brand px-2 py-0.5 rounded-full">Neu</span>
+                                                </div>
+                                                <p class="text-xs text-neutral-500">vor 3 Wochen · 1 Rezension</p>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-center gap-1 bg-white/10 px-3 py-1.5 rounded-full"><i data-lucide="star" class="w-3.5 h-3.5 text-amber-400 fill-amber-400"></i><span class="text-sm font-bold text-white">5,0</span></div>
+                                    </div>
+                                    <div class="flex gap-0.5 mb-5">
+                                        <i data-lucide="star" class="w-5 h-5 text-amber-400 fill-amber-400"></i>
+                                        <i data-lucide="star" class="w-5 h-5 text-amber-400 fill-amber-400"></i>
+                                        <i data-lucide="star" class="w-5 h-5 text-amber-400 fill-amber-400"></i>
+                                        <i data-lucide="star" class="w-5 h-5 text-amber-400 fill-amber-400"></i>
+                                        <i data-lucide="star" class="w-5 h-5 text-amber-400 fill-amber-400"></i>
+                                    </div>
+                                    <p class="text-base lg:text-lg text-neutral-300 leading-relaxed mb-6">„Ich war heute das erste mal in der Praxis von Dr. Potenz. Eine moderne Praxis mit einem tollen Team. Meine Behandlung erfolgte in entspannter Atmosphäre und hoch professionell. Ich bin sehr zufrieden und kann die Zahnarztpraxis von Dr. Potenz auf jeden Fall weiterempfehlen."</p>
+                                    <div class="flex items-center gap-2 text-neutral-500"><i data-lucide="message-square" class="w-3.5 h-3.5"></i><span class="text-xs">Google Bewertung von Michael Volkwein</span></div>
+                                </div>
+                            </div>
+
+                            <!-- Slide 3: Iulian Palade -->
+                            <div class="flipbook-slide">
+                                <div class="relative z-10">
+                                    <div class="flex items-center justify-between mb-6">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-11 h-11 rounded-full bg-white/10 flex items-center justify-center"><span class="text-sm font-bold text-brand">IP</span></div>
+                                            <div>
+                                                <div class="flex items-center gap-2">
+                                                    <p class="text-sm font-semibold text-white">Iulian Palade</p>
+                                                    <span class="text-[9px] font-bold uppercase tracking-wider bg-white/10 text-neutral-400 px-2 py-0.5 rounded-full">Local Guide</span>
+                                                </div>
+                                                <p class="text-xs text-neutral-500">vor 4 Monaten · 20 Rezensionen</p>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-center gap-1 bg-white/10 px-3 py-1.5 rounded-full"><i data-lucide="star" class="w-3.5 h-3.5 text-amber-400 fill-amber-400"></i><span class="text-sm font-bold text-white">5,0</span></div>
+                                    </div>
+                                    <div class="flex gap-0.5 mb-5">
+                                        <i data-lucide="star" class="w-5 h-5 text-amber-400 fill-amber-400"></i>
+                                        <i data-lucide="star" class="w-5 h-5 text-amber-400 fill-amber-400"></i>
+                                        <i data-lucide="star" class="w-5 h-5 text-amber-400 fill-amber-400"></i>
+                                        <i data-lucide="star" class="w-5 h-5 text-amber-400 fill-amber-400"></i>
+                                        <i data-lucide="star" class="w-5 h-5 text-amber-400 fill-amber-400"></i>
+                                    </div>
+                                    <p class="text-base lg:text-lg text-neutral-300 leading-relaxed mb-6">„Ich hatte eine sehr angenehme Erfahrung in dieser Zahnarztpraxis. Der Herr und die Frau Doktor sind äußerst freundlich, geduldig und sehr kompetent. Mir wurde alles klar und verständlich erklärt – sowohl die notwendigen Behandlungen als auch die anfallenden Kosten. Die Atmosphäre ist sehr angenehm und die Kommunikation hervorragend, sodass man sich gut aufgehoben fühlt. Ich kann diese Praxis mit voller Überzeugung jedem weiterempfehlen, der professionelle und patientenorientierte Zahnärzte sucht."</p>
+                                    <div class="flex items-center gap-2 text-neutral-500"><i data-lucide="message-square" class="w-3.5 h-3.5"></i><span class="text-xs">Google Bewertung von Iulian Palade</span></div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="relative z-10 flex items-center justify-between mt-6">
+                        <button class="flipbook-arrow" id="flipPrev" aria-label="Vorherige Bewertung"><i data-lucide="chevron-left" class="w-5 h-5"></i></button>
+                        <div class="flex items-center gap-2" id="flipDots">
+                            <button class="flipbook-dot active" data-index="0" aria-label="Bewertung 1"></button>
+                            <button class="flipbook-dot" data-index="1" aria-label="Bewertung 2"></button>
+                            <button class="flipbook-dot" data-index="2" aria-label="Bewertung 3"></button>
+                        </div>
+                        <button class="flipbook-arrow" id="flipNext" aria-label="Nächste Bewertung"><i data-lucide="chevron-right" class="w-5 h-5"></i></button>
+                    </div>
+                    <div class="flip-progress-bar"><div class="flip-progress-fill" id="flipProgress"></div></div>
+                </div>
+
+                <div class="mt-10 text-center observe-fade">
+                    <div class="inline-flex items-center gap-6 lg:gap-8 bg-[#f5f5f5] rounded-2xl px-8 py-5">
+                        <div class="text-center"><p class="font-display font-bold text-2xl text-stone-800">9,9<span class="text-sm text-neutral-400 font-normal">/10</span></p><p class="text-[10px] uppercase tracking-widest text-neutral-400 mt-0.5">Sanego</p></div>
+                        <div class="w-px h-10 bg-neutral-200"></div>
+                        <div class="text-center"><p class="font-display font-bold text-2xl text-stone-800">5,0<span class="text-sm text-neutral-400 font-normal">/5</span></p><p class="text-[10px] uppercase tracking-widest text-neutral-400 mt-0.5">Jameda</p></div>
+                        <div class="w-px h-10 bg-neutral-200"></div>
+                        <div class="text-center"><p class="font-display font-bold text-2xl text-stone-800">4,6<span class="text-sm text-neutral-400 font-normal">/5</span></p><p class="text-[10px] uppercase tracking-widest text-neutral-400 mt-0.5">Google · 30 Bewertungen</p></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TEAM -->
+    <section id="team" class="py-20 lg:py-32">
+        <div class="max-w-[1600px] mx-auto px-6 lg:px-12">
+            <div class="text-center max-w-2xl mx-auto mb-16 observe-fade">
+                <span class="inline-block text-[10px] font-medium uppercase tracking-widest text-neutral-400 mb-4">Unser Team</span>
+                <h2 class="font-display font-medium text-3xl lg:text-5xl tracking-tight text-neutral-900 mb-4">Menschen, die<br><span class="text-stone-400">zuhören.</span></h2>
+                <p class="text-neutral-500 leading-relaxed">Hinter jeder guten Behandlung stehen Menschen mit Haltung, Erfahrung und echtem Interesse an Ihrem Wohlbefinden.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                <div class="bg-white rounded-[32px] p-8 lg:p-10 shadow-sm hover:shadow-xl hover:scale-[1.01] transition-all duration-300 observe-fade">
+                    <div class="w-24 h-24 rounded-2xl bg-stone-900 flex items-center justify-center mb-6 shadow-md"><span class="font-display font-bold text-brand text-2xl">RP</span></div>
+                    <h3 class="font-display font-bold text-xl tracking-tight mb-1">Dr. Radu-Ionel Potenz</h3>
+                    <p class="text-sm text-neutral-400 mb-1">Dr. medic. stom. (UMF Timișoara)</p>
+                    <p class="text-sm text-neutral-400 mb-4">Zahnarzt · Praxisinhaber</p>
+                    <p class="text-sm text-neutral-500 leading-relaxed">Fachkompetenz und Menschlichkeit als Einheit – für Behandlungen, die sich nicht nur im Spiegel, sondern im Alltag richtig anfühlen.</p>
+                </div>
+                <div class="bg-white rounded-[32px] p-8 lg:p-10 shadow-sm hover:shadow-xl hover:scale-[1.01] transition-all duration-300 observe-fade">
+                    <div class="w-24 h-24 rounded-2xl overflow-hidden mb-6 shadow-md">
+                        <img src="https://z-cdn-media.chatglm.cn/files/cd116fe9-e744-4dcf-adbf-b8466c4c6f53.png?auth_key=1882810181-c2c10fc02436429ead4f7ebfc63e9fbb-0-71a26cc008f6677c1082c567ab7a9048" alt="Frau Dr. Coroeru – Zahnärztin" class="w-full h-full object-cover object-top team-avatar-img">
+                    </div>
+                    <h3 class="font-display font-bold text-xl tracking-tight mb-1">Frau Dr. Coroeru</h3>
+                    <p class="text-sm text-neutral-400 mb-4">Zahnärztin</p>
+                    <p class="text-sm text-neutral-500 leading-relaxed">Mit Präzision und Feingefühl sorgt sie für eine schmerzfreie Behandlung und ein rundum sicheres Gefühl auf dem Behandlungsstuhl.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- KONTAKT -->
+    <section id="kontakt" class="py-20 lg:py-32 bg-white">
+        <div class="max-w-[1600px] mx-auto px-6 lg:px-12">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20">
+                <div class="observe-fade">
+                    <span class="inline-block text-[10px] font-medium uppercase tracking-widest text-neutral-400 mb-4">Kontakt & Sprechzeiten</span>
+                    <h2 class="font-display font-medium text-3xl lg:text-5xl tracking-tight leading-tight text-neutral-900 mb-6">Wir freuen uns<br><span class="text-stone-400">auf Sie.</span></h2>
+                    <p class="text-base lg:text-lg text-neutral-500 leading-relaxed mb-10">Eine vorherige Terminvereinbarung wird empfohlen. Neupatienten werden aufgenommen.</p>
+                    <div class="space-y-5 mb-10">
+                        <div class="flex items-start gap-4"><div class="w-11 h-11 rounded-xl bg-brand/15 flex items-center justify-center shrink-0"><i data-lucide="map-pin" class="w-5 h-5 text-stone-700"></i></div><div><h4 class="font-display font-semibold text-sm mb-0.5">Adresse</h4><p class="text-sm text-neutral-500">DENT`X Praxis Dr. Potenz<br>Werther Str. 12, 35578 Wetzlar</p></div></div>
+                        <div class="flex items-start gap-4"><div class="w-11 h-11 rounded-xl bg-brand/15 flex items-center justify-center shrink-0"><i data-lucide="phone" class="w-5 h-5 text-stone-700"></i></div><div><h4 class="font-display font-semibold text-sm mb-0.5">Telefon</h4><a href="tel:+4964413086778" class="text-sm text-stone-800 font-medium hover:text-brand transition-colors">06441 3086778</a></div></div>
+                        <div class="flex items-start gap-4"><div class="w-11 h-11 rounded-xl bg-brand/15 flex items-center justify-center shrink-0"><i data-lucide="globe" class="w-5 h-5 text-stone-700"></i></div><div><h4 class="font-display font-semibold text-sm mb-0.5">Website</h4><a href="https://wetzlarzahnarzt.de" target="_blank" rel="noopener" class="text-sm text-stone-800 font-medium hover:text-brand transition-colors">wetzlarzahnarzt.de</a></div></div>
+                        <div class="flex items-start gap-4"><div class="w-11 h-11 rounded-xl bg-brand/15 flex items-center justify-center shrink-0"><i data-lucide="car" class="w-5 h-5 text-stone-700"></i></div><div><h4 class="font-display font-semibold text-sm mb-0.5">Parken</h4><p class="text-sm text-neutral-500">Kostenlose Patientenparkplätze direkt vor der Praxis</p></div></div>
+                    </div>
+                    <div class="bg-[#f5f5f5] rounded-2xl p-6">
+                        <div class="flex items-center gap-2.5 mb-4"><i data-lucide="clock" class="w-4 h-4 text-stone-600"></i><h4 class="font-display font-semibold text-sm text-stone-800">Sprechzeiten</h4></div>
+                        <div>
+                            <div class="hours-row"><span class="text-sm text-neutral-600">Montag</span><span class="text-sm text-stone-800 font-medium">09:00 – 12:30 & 13:30 – 18:00</span></div>
+                            <div class="hours-row"><span class="text-sm text-neutral-600">Dienstag</span><span class="text-sm text-stone-800 font-medium">09:00 – 12:30 & 13:30 – 18:00</span></div>
+                            <div class="hours-row"><span class="text-sm text-neutral-600">Mittwoch</span><span class="text-sm text-stone-800 font-medium">09:00 – 13:00</span></div>
+                            <div class="hours-row"><span class="text-sm text-neutral-600">Donnerstag</span><span class="text-sm text-stone-800 font-medium">09:00 – 12:30 & 13:30 – 18:00</span></div>
+                            <div class="hours-row"><span class="text-sm text-neutral-600">Freitag</span><span class="text-sm text-stone-800 font-medium">09:00 – 12:30 & 13:30 – 18:00</span></div>
+                            <div class="hours-row"><span class="text-sm text-neutral-600">Samstag</span><span class="text-sm text-stone-800 font-medium">09:00 – 13:00</span></div>
+                            <div class="hours-row"><span class="text-sm text-neutral-400">Sonntag</span><span class="text-sm text-neutral-400 font-medium">Geschlossen</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="observe-fade">
+                    <div class="rounded-[32px] overflow-hidden shadow-2xl bg-[#f5f5f5] h-full min-h-[400px] lg:min-h-auto flex items-center justify-center relative">
+                        <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=800&h=600&q=80" alt="Moderne Praxisumgebung" class="absolute inset-0 w-full h-full object-cover opacity-40">
+                        <div class="relative z-10 text-center px-8 py-16">
+                            <div class="w-16 h-16 rounded-2xl bg-stone-900 flex items-center justify-center mx-auto mb-6 shadow-lg"><i data-lucide="calendar" class="w-7 h-7 text-brand"></i></div>
+                            <h3 class="font-display font-semibold text-xl text-stone-800 mb-2">Termin vereinbaren</h3>
+                            <p class="text-sm text-neutral-500 leading-relaxed max-w-sm mx-auto mb-8">Wir freuen uns auf Ihren Anruf. Neupatienten sind willkommen.</p>
+                            <div class="flex flex-col sm:flex-row gap-3 justify-center">
+                                <a href="tel:+4964413086778" class="inline-flex items-center justify-center gap-2 bg-stone-900 text-brand text-sm font-medium px-6 py-3 rounded-full hover:bg-stone-800 hover:scale-105 transition-all duration-300 shadow-lg shadow-stone-900/20"><i data-lucide="phone" class="w-4 h-4"></i>06441 3086778</a>
+                                <a href="https://wetzlarzahnarzt.de" target="_blank" rel="noopener" class="inline-flex items-center justify-center gap-2 bg-white/80 backdrop-blur-sm text-neutral-700 text-sm font-medium px-6 py-3 rounded-full border border-neutral-200/60 hover:bg-white hover:scale-105 transition-all duration-300"><i data-lucide="globe" class="w-4 h-4"></i>wetzlarzahnarzt.de</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-[#0a0a0a] border-t border-white/5">
+        <div class="max-w-[1600px] mx-auto px-6 lg:px-12 py-16">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+                <div>
+                    <div class="flex items-center gap-3 mb-4"><div class="w-9 h-9 rounded-xl bg-white/10 flex items-center justify-center"><i data-lucide="cross" class="w-4 h-4 text-brand"></i></div><div><span class="font-display font-bold text-sm tracking-tight text-white">DENT`X Dr. Potenz</span><span class="text-xs block -mt-0.5 text-neutral-500">Zahnarzt · Wetzlar</span></div></div>
+                    <p class="text-sm text-neutral-500 leading-relaxed max-w-xs">Moderne Zahnmedizin mit Ruhe, Präzision und echter Zuwendung – Werther Str. 12, 35578 Wetzlar.</p>
+                </div>
+                <div>
+                    <h4 class="font-display font-semibold text-sm text-white mb-4">Schnellzugriff</h4>
+                    <div class="flex flex-col gap-2.5">
+                        <a href="#leistungen" class="text-sm text-neutral-500 hover:text-brand transition-colors">Leistungen</a>
+                        <a href="#ueber-uns" class="text-sm text-neutral-500 hover:text-brand transition-colors">Über uns</a>
+                        <a href="#philosophie" class="text-sm text-neutral-500 hover:text-brand transition-colors">Philosophie</a>
+                        <a href="#bewertungen" class="text-sm text-neutral-500 hover:text-brand transition-colors">Bewertungen</a>
+                        <a href="#team" class="text-sm text-neutral-500 hover:text-brand transition-colors">Team</a>
+                        <a href="#kontakt" class="text-sm text-neutral-500 hover:text-brand transition-colors">Kontakt & Sprechzeiten</a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="font-display font-semibold text-sm text-white mb-4">Bewertungen</h4>
+                    <div class="space-y-3 mb-6">
+                        <div class="flex items-center gap-3"><div class="flex gap-0.5"><i data-lucide="star" class="w-3.5 h-3.5 text-amber-400 fill-amber-400"></i><i data-lucide="star" class="w-3.5 h-3.5 text-amber-400 fill-amber-400"></i><i data-lucide="star" class="w-3.5 h-3.5 text-amber-400 fill-amber-400"></i><i data-lucide="star" class="w-3.5 h-3.5 text-amber-400 fill-amber-400"></i><i data-lucide="star" class="w-3.5 h-3.5 text-amber-400 fill-amber-400"></i></div><span class="text-sm text-neutral-400">9,9/10 auf Sanego</span></div>
+                        <div class="flex items-center gap-3"><div class="flex gap-0.5"><i data-lucide="star" class="w-3.5 h-3.5 text-amber-400 fill-amber-400"></i><i data-lucide="star" class="w-3.5 h-3.5 text-amber-400 fill-amber-400"></i><i data-lucide="star" class="w-3.5 h-3.5 text-amber-400 fill-amber-400"></i><i data-lucide="star" class="w-3.5 h-3.5 text-amber-400 fill-amber-400"></i><i data-lucide="star" class="w-3.5 h-3.5 text-amber-400 fill-amber-400"></i></div><span class="text-sm text-neutral-400">5,0/5 auf Jameda</span></div>
+                        <div class="flex items-center gap-3"><div class="flex gap-0.5"><i data-lucide="star" class="w-3.5 h-3.5 text-amber-400 fill-amber-400"></i><i data-lucide="star" class="w-3.5 h-3.5 text-amber-400 fill-amber-400"></i><i data-lucide="star" class="w-3.5 h-3.5 text-amber-400 fill-amber-400"></i><i data-lucide="star" class="w-3.5 h-3.5 text-amber-400 fill-amber-400"></i><i data-lucide="star" class="w-3.5 h-3.5 text-neutral-600"></i></div><span class="text-sm text-neutral-400">4,6/5 auf Google (30 Bewertungen)</span></div>
+                    </div>
+                    <div class="space-y-2">
+                        <a href="tel:+4964413086778" class="flex items-center gap-2 text-sm text-neutral-400 hover:text-brand transition-colors"><i data-lucide="phone" class="w-3.5 h-3.5"></i>06441 3086778</a>
+                        <a href="https://wetzlarzahnarzt.de" target="_blank" rel="noopener" class="flex items-center gap-2 text-sm text-neutral-400 hover:text-brand transition-colors"><i data-lucide="globe" class="w-3.5 h-3.5"></i>wetzlarzahnarzt.de</a>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-12 pt-8 border-t border-white/5 flex flex-col sm:flex-row justify-between items-center gap-4">
+                <p class="text-xs text-neutral-600">© 2025 DENT`X Praxis Dr. Potenz · Werther Str. 12 · 35578 Wetzlar</p>
+                <div class="flex items-center gap-6"><a href="#" class="text-xs text-neutral-600 hover:text-neutral-400 transition-colors">Impressum</a><a href="#" class="text-xs text-neutral-600 hover:text-neutral-400 transition-colors">Datenschutz</a></div>
+            </div>
+        </div>
+    </footer>
+
+    <button id="backToTop" class="fixed bottom-6 right-6 z-50 w-12 h-12 rounded-full bg-stone-900 text-brand flex items-center justify-center shadow-lg transition-all duration-300 opacity-0 pointer-events-none translate-y-4 hover:bg-stone-800"><i data-lucide="arrow-up" class="w-5 h-5"></i></button>
+
+    <script>
+        const mainNav = document.getElementById('mainNav');
+        function updateNav() {
+            if (window.scrollY > 50) { mainNav.classList.add('bg-white/80','backdrop-blur-md','shadow-sm','border-b','border-neutral-200/40'); }
+            else { mainNav.classList.remove('bg-white/80','backdrop-blur-md','shadow-sm','border-b','border-neutral-200/40'); }
+        }
+        window.addEventListener('scroll', updateNav, { passive: true });
+        updateNav();
+
+        const mobileToggle = document.getElementById('mobileToggle');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const menuIcon = document.getElementById('menuIcon');
+        mobileToggle.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            menuIcon.setAttribute('data-lucide', mobileMenu.classList.contains('hidden') ? 'menu' : 'x');
+            lucide.createIcons();
+        });
+        document.querySelectorAll('.mobile-link').forEach(l => l.addEventListener('click', () => {
+            mobileMenu.classList.add('hidden');
+            menuIcon.setAttribute('data-lucide', 'menu');
+            lucide.createIcons();
+        }));
+
+        const animObs = new IntersectionObserver((entries) => {
+            entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); animObs.unobserve(e.target); } });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.observe-fade').forEach(el => animObs.observe(el));
+
+        const philObs = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    e.target.closest('section').querySelectorAll('.philosophy-line').forEach((l, i) => setTimeout(() => l.classList.add('visible'), i * 200));
+                    philObs.unobserve(e.target);
+                }
+            });
+        }, { threshold: 0.2 });
+        const fPL = document.querySelector('.philosophy-line');
+        if (fPL) philObs.observe(fPL);
+
+        // FLIPBOOK
+        const track = document.getElementById('flipbookTrack');
+        const dots = document.querySelectorAll('.flipbook-dot');
+        const prevBtn = document.getElementById('flipPrev');
+        const nextBtn = document.getElementById('flipNext');
+        const progressBar = document.getElementById('flipProgress');
+        const SLIDE_DURATION = 7000;
+        const totalSlides = 3;
+        let currentSlide = 0;
+        let autoPlayTimer = null;
+        let isPaused = false;
+
+        function goToSlide(index) {
+            currentSlide = ((index % totalSlides) + totalSlides) % totalSlides;
+            track.style.transform = 'translateX(-' + (currentSlide * 100) + '%)';
+            dots.forEach((d, i) => d.classList.toggle('active', i === currentSlide));
+            resetProgress();
+        }
+
+        function resetProgress() {
+            progressBar.classList.remove('running');
+            progressBar.style.width = '0%';
+            void progressBar.offsetWidth;
+            if (!isPaused) progressBar.classList.add('running');
+        }
+
+        function scheduleNext() {
+            clearTimeout(autoPlayTimer);
+            autoPlayTimer = setTimeout(() => {
+                if (!isPaused) { goToSlide(currentSlide + 1); scheduleNext(); }
+            }, SLIDE_DURATION);
+        }
+
+        function startAutoPlay() { isPaused = false; resetProgress(); scheduleNext(); }
+        function stopAutoPlay() { isPaused = true; clearTimeout(autoPlayTimer); progressBar.classList.remove('running'); progressBar.style.width = '0%'; }
+
+        prevBtn.addEventListener('click', () => { stopAutoPlay(); goToSlide(currentSlide - 1); startAutoPlay(); });
+        nextBtn.addEventListener('click', () => { stopAutoPlay(); goToSlide(currentSlide + 1); startAutoPlay(); });
+        dots.forEach(dot => dot.addEventListener('click', () => { stopAutoPlay(); goToSlide(parseInt(dot.dataset.index)); startAutoPlay(); }));
+
+        let touchStartX = 0;
+        const flipbook = document.getElementById('flipbook');
+        flipbook.addEventListener('touchstart', (e) => { touchStartX = e.touches[0].clientX; stopAutoPlay(); }, { passive: true });
+        flipbook.addEventListener('touchend', (e) => {
+            const diff = touchStartX - e.changedTouches[0].clientX;
+            if (Math.abs(diff) > 50) goToSlide(currentSlide + (diff > 0 ? 1 : -1));
+            startAutoPlay();
+        }, { passive: true });
+
+        flipbook.addEventListener('mouseenter', () => { if (window.matchMedia('(hover: hover)').matches) stopAutoPlay(); });
+        flipbook.addEventListener('mouseleave', () => { if (window.matchMedia('(hover: hover)').matches) startAutoPlay(); });
+
+        const flipObs = new IntersectionObserver((entries) => {
+            entries.forEach(e => { if (e.isIntersecting) startAutoPlay(); else stopAutoPlay(); });
+        }, { threshold: 0.3 });
+        flipObs.observe(flipbook);
+
+        const backToTop = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 600) { backToTop.style.opacity='1'; backToTop.style.transform='translateY(0)'; backToTop.style.pointerEvents='auto'; }
+            else { backToTop.style.opacity='0'; backToTop.style.transform='translateY(1rem)'; backToTop.style.pointerEvents='none'; }
+        }, { passive: true });
+        backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+        lucide.createIcons();
+    </script>
+</body>
+</html>
